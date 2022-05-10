@@ -197,7 +197,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-05-10 15:25:27 / Modified: 15:37:29" itemprop="dateCreated datePublished" datetime="2022-05-10T15:25:27+08:00">2022-05-10</time>
+              <time title="Created: 2022-05-10 15:25:27 / Modified: 15:52:34" itemprop="dateCreated datePublished" datetime="2022-05-10T15:25:27+08:00">2022-05-10</time>
             </span>
 
           
@@ -223,14 +223,15 @@
 
 <h2 id="3-标签设定与标签标定："><a href="#3-标签设定与标签标定：" class="headerlink" title="3.标签设定与标签标定："></a>3.标签设定与标签标定：</h2><p>切分完以后就得到<strong>一堆一堆的图片</strong>「八千多张」</p>
 <p>然后找师姐和师弟帮忙一起打标签「非常感谢🙏」</p>
-<p>打标签是在「<a target="_blank" rel="noopener" href="https://www.makesense.ai/%E3%80%8D%E8%BF%99%E4%B8%AA%E7%BD%91%E7%AB%99%E4%B8%8A%E6%89%93%E7%9A%84%E3%80%8C%E9%9D%9E%E5%B8%B8%E4%BC%98%E9%9B%85%E3%80%8D%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E4%B8%BA**VOC**%E3%80%81**YOLO**%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5**XML">https://www.makesense.ai/」这个网站上打的「非常优雅」输出格式可以选择为**VOC**、**YOLO**或者直接**XML</a>**</p>
+<p>打标签是在「<a target="_blank" rel="noopener" href="https://www.makesense.ai/%E3%80%8D%E8%BF%99%E4%B8%AA%E7%BD%91%E7%AB%99%E4%B8%8A%E6%89%93%E7%9A%84">https://www.makesense.ai/」这个网站上打的</a></p>
+<p>输出格式可以选择为<strong>VOC</strong>、<strong>YOLO</strong>或者直接<strong>XML</strong></p>
 <p><strong>标签</strong>按照相机相对于蝠鲼的位置一共设定了<strong>8个类</strong>，分别为「<strong>left_front</strong>，<strong>left_rear</strong>，<strong>right_front</strong>，<strong>right_rear</strong>，<strong>front</strong>，<strong>rear</strong>，<strong>left</strong>，<strong>right</strong>」</p>
 <blockquote>
 <p>这里是“二号坑”：最早的时候打的标签是中文，但是后面推理的时候无法正确在图片上输出中文，所以在后面进行标签转化的时候需要进行英文替换，而且这八个类的顺序也十分十分十分重要，会影响到后面loss的计算。</p>
 </blockquote>
 <p>下面是打标网站的界面和打标的部分实况截图</p>
-<p><img src="https://wx2.sinaimg.cn/orj360/005XjMv9ly1h23cjwewxsj30xi0rajyn.jpg" alt="image-20220510143839199"></p>
-<p><img src="https://wx4.sinaimg.cn/orj360/005XjMv9ly1h23cjvruujj30xu0iwn3c.jpg" alt="image-20220510144044176"></p>
+<p><img src="https://wx2.sinaimg.cn/large/005XjMv9ly1h23cjwewxsj30xi0rajyn.jpg" alt="image-20220510143839199"></p>
+<p><img src="https://wx4.sinaimg.cn/large/005XjMv9ly1h23cjvruujj30xu0iwn3c.jpg" alt="image-20220510144044176"></p>
 <h2 id="4-文件过滤"><a href="#4-文件过滤" class="headerlink" title="4.文件过滤"></a>4.文件过滤</h2><p>因为打标签的时候是图片文件-标签文件一一对应的，如果打标过程中遇到一些质量较低的图片就会选择跳过不打标签</p>
 <p>这就造成了有部分图片并没有标签，我们需要去掉这些无标签的图片，这里用标签文件名「不含.xml」进行匹配过滤这些「无用」图片</p>
 <p>程序如下：</p>
