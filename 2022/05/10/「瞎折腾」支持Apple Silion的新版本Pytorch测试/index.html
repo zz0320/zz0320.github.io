@@ -24,28 +24,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="参考文章「mmdet文档」「**Pytorch官网**」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112    使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url http">
+    <meta name="description" content="背景介绍今天早晨起来看到了「机器之心」和「量子位」的公众号推文「PyTorch宣布支持苹果M1芯片GPU加速：训练快6倍，推理提升21倍」「炼丹速度×7！你的Mac电脑也能在PyTorch训练中用GPU加速了」 我的天 过年了过年了  Pytorch支持Apple Silion啦！！！  看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！ 环境配置先根据Pytorch的官方指引用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「环境配置」使用Conda配置mmdetction环境">
-<meta property="og:url" content="https://username.github.io/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:title" content="「瞎折腾」支持Apple Silion的新版本Pytorch测试">
+<meta property="og:url" content="https://username.github.io/2022/05/10/%E3%80%8C%E7%9E%8E%E6%8A%98%E8%85%BE%E3%80%8D%E6%94%AF%E6%8C%81Apple%20Silion%E7%9A%84%E6%96%B0%E7%89%88%E6%9C%ACPytorch%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="陨石kk的博客">
-<meta property="og:description" content="参考文章「mmdet文档」「**Pytorch官网**」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112    使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url http">
+<meta property="og:description" content="背景介绍今天早晨起来看到了「机器之心」和「量子位」的公众号推文「PyTorch宣布支持苹果M1芯片GPU加速：训练快6倍，推理提升21倍」「炼丹速度×7！你的Mac电脑也能在PyTorch训练中用GPU加速了」 我的天 过年了过年了  Pytorch支持Apple Silion啦！！！  看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！ 环境配置先根据Pytorch的官方指引用">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-19T10:02:00.000Z">
-<meta property="article:modified_time" content="2022-05-19T10:02:38.808Z">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg">
+<meta property="article:published_time" content="2022-05-10T07:25:27.000Z">
+<meta property="article:modified_time" content="2022-05-19T10:15:58.537Z">
 <meta property="article:author" content="陨石kk">
-<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="尝鲜">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg">
 
 
-<link rel="canonical" href="https://username.github.io/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+<link rel="canonical" href="https://username.github.io/2022/05/10/%E3%80%8C%E7%9E%8E%E6%8A%98%E8%85%BE%E3%80%8D%E6%94%AF%E6%8C%81Apple%20Silion%E7%9A%84%E6%96%B0%E7%89%88%E6%9C%ACPytorch%E6%B5%8B%E8%AF%95/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/","path":"2022/05/19/「环境配置」mmdetection环境配置/","title":"「环境配置」使用Conda配置mmdetction环境"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/10/%E3%80%8C%E7%9E%8E%E6%8A%98%E8%85%BE%E3%80%8D%E6%94%AF%E6%8C%81Apple%20Silion%E7%9A%84%E6%96%B0%E7%89%88%E6%9C%ACPytorch%E6%B5%8B%E8%AF%95/","path":"2022/05/10/「瞎折腾」支持Apple Silion的新版本Pytorch测试/","title":"「瞎折腾」支持Apple Silion的新版本Pytorch测试"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>「环境配置」使用Conda配置mmdetction环境 | 陨石kk的博客</title>
+<title>「瞎折腾」支持Apple Silion的新版本Pytorch测试 | 陨石kk的博客</title>
   
 
 
@@ -147,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E6%BF%80%E6%B4%BB%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">Conda激活环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8pip-%E4%B8%8B%E8%BD%BDPytorch"><span class="nav-number">2.</span> <span class="nav-text">使用pip 下载Pytorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmcv-full-x3D-x3D-1-4-5"><span class="nav-number">3.</span> <span class="nav-text">安装mmcv-full &#x3D;&#x3D; 1.4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda-%E5%AE%89%E8%A3%85onnx%E5%92%8Connxruntime"><span class="nav-number">4.</span> <span class="nav-text">Conda 安装onnx和onnxruntime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">安装依赖环境库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8B%E5%90%8E-python-setup-py-develp"><span class="nav-number">6.</span> <span class="nav-text">之后 python setup.py develp</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">项目实测</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,7 +221,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/10/%E3%80%8C%E7%9E%8E%E6%8A%98%E8%85%BE%E3%80%8D%E6%94%AF%E6%8C%81Apple%20Silion%E7%9A%84%E6%96%B0%E7%89%88%E6%9C%ACPytorch%E6%B5%8B%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
@@ -228,12 +234,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="「环境配置」使用Conda配置mmdetction环境 | 陨石kk的博客">
+      <meta itemprop="name" content="「瞎折腾」支持Apple Silion的新版本Pytorch测试 | 陨石kk的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          「环境配置」使用Conda配置mmdetction环境
+          「瞎折腾」支持Apple Silion的新版本Pytorch测试
         </h1>
 
         <div class="post-meta-container">
@@ -243,9 +249,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-05-19 18:02:00 / 修改时间：18:02:38" itemprop="dateCreated datePublished" datetime="2022-05-19T18:02:00+08:00">2022-05-19</time>
+      <time title="创建时间：2022-05-10 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-10T15:25:27+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-19 18:15:58" itemprop="dateModified" datetime="2022-05-19T18:15:58+08:00">2022-05-19</time>
     </span>
 
   
@@ -258,21 +270,59 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>参考文章「<a target="_blank" rel="noopener" href="https://mmdetection.readthedocs.io/zh_CN/v2.22.0/get_started.html#id2"><strong>mmdet文档</strong></a>」「**<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">Pytorch官网</a>**」</p>
-<h2 id="Conda激活环境"><a href="#Conda激活环境" class="headerlink" title="Conda激活环境"></a>Conda激活环境</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n py39_torch112 python=3.9</span><br><span class="line">conda activate py39_torch112  </span><br></pre></td></tr></table></figure>
-
-<h2 id="使用pip-下载Pytorch"><a href="#使用pip-下载Pytorch" class="headerlink" title="使用pip 下载Pytorch"></a>使用pip 下载Pytorch</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu</span><br><span class="line"></span><br><span class="line">pip3 install torch torchvision torchaudio</span><br></pre></td></tr></table></figure>
+        <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>今天早晨起来看到了「机器之心」和「量子位」的公众号推文「<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UjnDVacH-6kSadPOnO32lQ">PyTorch宣布支持苹果M1芯片GPU加速：训练快6倍，推理提升21倍</a>」「<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TMreqcWsvu-EOB1qEgg6Kg">炼丹速度×7！你的Mac电脑也能在PyTorch训练中用GPU加速了</a>」</p>
+<p>我的天 过年了过年了  <strong>Pytorch支持Apple Silion啦！！！</strong> </p>
+<p>看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>先根据Pytorch的<a target="_blank" rel="noopener" href="https://pytorch.org/blog/introducing-accelerated-pytorch-training-on-mac/">官方指引</a>用Conda创建一个原生Python环境「M1系列Python3.9以上才是原生」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n torch112_py39 python=3.9</span><br><span class="line">conda activate torch112_py39</span><br></pre></td></tr></table></figure>
 
 <span id="more"></span>
 
-<h2 id="安装mmcv-full-x3D-x3D-1-4-5"><a href="#安装mmcv-full-x3D-x3D-1-4-5" class="headerlink" title="安装mmcv-full &#x3D;&#x3D; 1.4.5"></a>安装mmcv-full &#x3D;&#x3D; 1.4.5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.4.5</span><br></pre></td></tr></table></figure>
+<p>之后进入环境 安装torch</p>
+<blockquote>
+<p>这里需要注意 conda下面找不到torchaudio 需要在pip下面安装</p>
+<p>安装结束后为了防止pip的环境与conda的环境冲突 删掉pip下面的torch</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision -c pytorch-nightly</span><br><span class="line">pip install torchaudio</span><br><span class="line">pip uninstall torch</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="Conda-安装onnx和onnxruntime"><a href="#Conda-安装onnx和onnxruntime" class="headerlink" title="Conda 安装onnx和onnxruntime"></a>Conda 安装onnx和onnxruntime</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install onnx onnxruntime</span><br></pre></td></tr></table></figure>
+<p>再安装一个依赖库「可能有用😂」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
 
-<h2 id="安装依赖环境库"><a href="#安装依赖环境库" class="headerlink" title="安装依赖环境库"></a>安装依赖环境库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<p>OK 环境配置好了 找个项目来试一试</p>
+<h2 id="项目实测"><a href="#项目实测" class="headerlink" title="项目实测"></a>项目实测</h2><p>正好手头有目标检测CenterNet的项目代码 跑跑看看有没有提升</p>
+<p>在Pycharm里面将编译环境改成设置好的<strong>torch112_py39</strong>环境</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg"></p>
+<p>之后安装项目依赖库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install matplotlib</span><br><span class="line">pip install torchsummary</span><br></pre></td></tr></table></figure>
 
-<h2 id="之后-python-setup-py-develp"><a href="#之后-python-setup-py-develp" class="headerlink" title="之后 python setup.py develp"></a>之后 python setup.py develp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py develop</span><br></pre></td></tr></table></figure>
-
+<p>最后运行看看结果</p>
+<table>
+<thead>
+<tr>
+<th>Torch1.9.0｜Python3.8</th>
+<th>Torch1.10.2 | Python3.9</th>
+<th>Torch1.9.0</th>
+<th>Python3.9</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg"></td>
+</tr>
+<tr>
+<td>1.43FPS</td>
+<td>2.42FPS</td>
+<td>4.29FPS</td>
+<td>5.85FPS</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Torch针对MBP的GPU代码为‘mps’ 需要将model和data都移到device &#x3D; torch.device(‘mps’)上</p>
+</blockquote>
+<p>平台为MacBook M1 Pro 16+512 8核CPU 14核GPU</p>
+<p>最后来看效果确实是有提升，考虑到目标检测过程中非torch操作很多且只能在CPU上跑这个项目，这种提升效果还是不错的，后续考虑再测试一下Train阶段的提升效果</p>
 
     </div>
 
@@ -282,18 +332,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag"># 环境配置</a>
+              <a href="/tags/%E5%B0%9D%E9%B2%9C/" rel="tag"># 尝鲜</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/05/18/%E3%80%8C%E8%9D%A0%E9%B2%BC%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8E%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E6%B0%B4%E4%B8%8B%E8%9D%A0%E9%B2%BC%E7%9B%B8%E5%AF%B9%E8%B7%9D%E7%A6%BB%E6%B5%8B%E9%87%8F/" rel="prev" title="「蝠鲼项目」（三）基于目标检测的水下蝠鲼相对距离测量">
-                  <i class="fa fa-chevron-left"></i> 「蝠鲼项目」（三）基于目标检测的水下蝠鲼相对距离测量
+                <a href="/2022/05/10/%E3%80%8C%E8%9D%A0%E9%B2%BC%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%B0%B4%E4%B8%8B%E4%BB%BF%E7%94%9F%E8%9D%A0%E9%B2%BC%E6%95%B0%E6%8D%AE%E9%9B%86%E8%8E%B7%E5%8F%96%E5%8F%8AVOC%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96%E4%B8%BACOCO%E6%A0%BC%E5%BC%8F/" rel="prev" title="「蝠鲼项目」（一）水下仿生蝠鲼数据集获取及VOC格式转化为COCO格式">
+                  <i class="fa fa-chevron-left"></i> 「蝠鲼项目」（一）水下仿生蝠鲼数据集获取及VOC格式转化为COCO格式
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/05/11/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%B7%E8%A7%86%E7%A7%91%E6%8A%80CVPR2022%E3%80%90CREStereo%E3%80%91%E5%AE%98%E6%96%B9GitHub%E4%BB%A3%E7%A0%81%E6%8E%A8%E7%90%86%E8%BF%90%E8%A1%8C/" rel="next" title="「论文系列」（一）旷视科技CVPR2022【CREStereo】官方GitHub代码推理运行">
+                  「论文系列」（一）旷视科技CVPR2022【CREStereo】官方GitHub代码推理运行 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
