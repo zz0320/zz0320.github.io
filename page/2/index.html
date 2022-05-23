@@ -158,13 +158,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -210,6 +210,202 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E5%9B%9B%EF%BC%89%E6%A8%A1%E5%9E%8B%E6%B6%A8%E7%82%B9%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E5%9B%9B%EF%BC%89%E6%A8%A1%E5%9E%8B%E6%B6%A8%E7%82%B9%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">「花朵分类项目」（四）模型涨点技巧</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 19:47:20" itemprop="dateCreated datePublished" datetime="2022-05-19T19:47:20+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-21 01:02:01" itemprop="dateModified" datetime="2022-05-21T01:02:01+08:00">2022-05-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="数据增强「增广」"><a href="#数据增强「增广」" class="headerlink" title="数据增强「增广」"></a>数据增强「增广」</h2><p>数据增强指通过图像处理方法对训练集数据进行丰富化</p>
+<p>数据增强使用原则：让训练集逼近验证集、测试集 </p>
+<h3 id="PyTorch-Transforms的二十二个方法"><a href="#PyTorch-Transforms的二十二个方法" class="headerlink" title="PyTorch.Transforms的二十二个方法"></a>PyTorch.Transforms的二十二个方法</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>代码操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>裁剪</strong></td>
+<td><strong>Crop</strong></td>
+</tr>
+<tr>
+<td>中心裁剪</td>
+<td>transforms.CenterCrop</td>
+</tr>
+<tr>
+<td>随机裁剪</td>
+<td>transforms.RandomCrop</td>
+</tr>
+<tr>
+<td>随机长宽比裁剪</td>
+<td>transforms.RandomResizedCrop</td>
+</tr>
+<tr>
+<td>上下左右中心裁剪</td>
+<td>transforms.FiveCrop</td>
+</tr>
+<tr>
+<td>上下左右中心裁剪后翻转</td>
+<td>transforms.TenCrop</td>
+</tr>
+<tr>
+<td><strong>翻转和旋转</strong></td>
+<td><strong>Flip and Rotation</strong></td>
+</tr>
+<tr>
+<td>依概率 p 水平翻转</td>
+<td>transforms.RandomHorizontalFlip(p&#x3D;0.5)</td>
+</tr>
+<tr>
+<td>依概率 p 垂直翻转</td>
+<td>transforms.RandomVerticalFlip(p&#x3D;0.5)</td>
+</tr>
+<tr>
+<td>随机旋转</td>
+<td>transforms.RandomRotation</td>
+</tr>
+<tr>
+<td><strong>图像变换</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>resize</td>
+<td>transforms.Resize</td>
+</tr>
+<tr>
+<td>标准化</td>
+<td>transforms.Normalize</td>
+</tr>
+<tr>
+<td>转为 tensor，并归一化至[0-1]</td>
+<td>transforms.ToTensor</td>
+</tr>
+<tr>
+<td>填充</td>
+<td>transforms.Pad</td>
+</tr>
+<tr>
+<td>修改亮度、对比度和饱和度</td>
+<td>transforms.ColorJitter</td>
+</tr>
+<tr>
+<td>转灰度图</td>
+<td>transforms.Grayscale</td>
+</tr>
+<tr>
+<td>线性变换</td>
+<td>transforms.LinearTransformation()</td>
+</tr>
+<tr>
+<td>仿射变换</td>
+<td>transforms.RandomAffine</td>
+</tr>
+<tr>
+<td>依概率 p 转为灰度图</td>
+<td>transforms.RandomGrayscale</td>
+</tr>
+<tr>
+<td>将数据转换为 PILImage</td>
+<td>transforms.ToPILImage</td>
+</tr>
+<tr>
+<td>Apply a user-defined lambda as a transform</td>
+<td>transforms.Lambda</td>
+</tr>
+<tr>
+<td><strong>对 transforms 操作，使数据增强更灵活</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>从给定的一系列 transforms 中选一个进行操作</td>
+<td>transforms.RandomChoice(transforms)</td>
+</tr>
+<tr>
+<td>给一个 transform 加上概率，依概率进行操作</td>
+<td>transforms.RandomApply(transforms, p&#x3D;0.5)</td>
+</tr>
+<tr>
+<td>将 transforms 中的操作随机打乱</td>
+<td>transforms.RandomOrder</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E5%9B%9B%EF%BC%89%E6%A8%A1%E5%9E%8B%E6%B6%A8%E7%82%B9%E6%8A%80%E5%B7%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -246,7 +442,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-20 23:40:38" itemprop="dateModified" datetime="2022-05-20T23:40:38+08:00">2022-05-20</time>
+      <time title="修改时间：2022-05-23 22:59:23" itemprop="dateModified" datetime="2022-05-23T22:59:23+08:00">2022-05-23</time>
     </span>
 
   
@@ -259,7 +455,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="VGG-ResNet-SENet介绍"><a href="#VGG-ResNet-SENet介绍" class="headerlink" title="VGG ResNet SENet介绍"></a>VGG ResNet SENet介绍</h2><h2 id="输入尺寸的选择"><a href="#输入尺寸的选择" class="headerlink" title="输入尺寸的选择"></a>输入尺寸的选择</h2><h3 id="方法一：让数据适应模型"><a href="#方法一：让数据适应模型" class="headerlink" title="方法一：让数据适应模型"></a>方法一：让数据适应模型</h3><p>直接将图像缩放&#x2F;裁剪到模型要求的输入尺寸，常见的尺寸如基于ImageNet设计的如224*224系列、基于Cifar设计的32*32系列</p>
+          <h2 id="VGG-ResNet-SENet介绍"><a href="#VGG-ResNet-SENet介绍" class="headerlink" title="VGG ResNet SENet介绍"></a>VGG ResNet SENet介绍</h2><h3 id="VGG-「原文链接」"><a href="#VGG-「原文链接」" class="headerlink" title="VGG 「原文链接」"></a>VGG 「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">原文链接</a>」</h3><p><img src="https://pic3.zhimg.com/v2-dfe4eaaa4450e2b58b38c5fe82f918c0_1440w.jpg?source=172ae18b"></p>
+<p>在VGG中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5*5卷积核，这样做的主要目的是在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
+<h3 id="ResNet「原文链接」"><a href="#ResNet「原文链接」" class="headerlink" title="ResNet「原文链接」"></a>ResNet「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">原文链接</a>」</h3><p><img src="https://pic4.zhimg.com/80/v2-252e6d9979a2a91c2d3033b9b73eb69f_720w.jpg"></p>
+<p>残差网络依旧让非线形层满足$H’(x,w_h)$，然后从输入直接引入一个短连接到非线形层的输出上，使得整个映射变为<br>$$<br>H(x) &#x3D; F(x) + x \Leftrightarrow  H’(x,w_h) + x<br>$$<br>$Shortcut-mapping$有利于<strong>梯度传播</strong>，梯度可以更有效的从后往前传播，同样可以有效的解决网络层数增加会导致的网络退化问题「至少不会变的更坏」，如果恒等映射已经是最优解，那么残差模块只需要拟合零映射。<br>$$<br>\frac{\partial H}{\partial x} &#x3D; \frac{\partial F}{\partial x} + \frac{\partial x}{\partial x} &#x3D; \frac{\partial F}{\partial x} + 1<br>$$</p>
+<h3 id="SENet「原文链接」"><a href="#SENet「原文链接」" class="headerlink" title="SENet「原文链接」"></a>SENet「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">原文链接</a>」</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65459972">参考链接</a>🔗</p>
+</blockquote>
+<p>对于卷积操作，很大一部分工作是提高<strong>感受野</strong>，即空间上融合更多特征融合，或者是提取多尺度空间信息，如Inception网络的多分支结构。对于channel维度的特征融合，卷积操作基本上默认对输入特征图的所有channel进行融合。而MobileNet网络中的组卷积（Group Convolution）和深度可分离卷积（Depthwise Separable Convolution）对channel进行分组也主要是为了使模型更加轻量级，减少计算量。而SENet网络的创新点在于<strong>关注channel之间的关系</strong>，希望模型可以自动学习到<strong>不同channel特征的重要程度</strong>。为此，SENet提出了<strong>Squeeze-and-Excitation (SE)模块</strong>，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iqetersyj20ru07rt98.jpg"></p>
+<p>SE模块首先对卷积得到的特征图进行<strong>Squeeze</strong>操作，得到channel级的全局特征，然后对全局特征进行<strong>Excitation</strong>操作，学习各个channel间的关系，也<strong>得到不同channel的权重</strong>，最后乘以原来的特征图得到最终特征。</p>
+<p>本质上，SE模块是在<strong>channel维度</strong>上做<strong>attention</strong>操作，这种注意力机制让模型可以更加关注信息量最大的channel特征，而抑制那些不重要的channel特征。另外一点是SE模块是通用的，这意味着其可以嵌入到现有的网络架构中。</p>
+<h2 id="输入尺寸的选择"><a href="#输入尺寸的选择" class="headerlink" title="输入尺寸的选择"></a>输入尺寸的选择</h2><h3 id="方法一：让数据适应模型"><a href="#方法一：让数据适应模型" class="headerlink" title="方法一：让数据适应模型"></a>方法一：让数据适应模型</h3><p>直接将图像缩放&#x2F;裁剪到模型要求的输入尺寸，常见的尺寸如基于ImageNet设计的如224*224系列、基于Cifar设计的32*32系列</p>
 <h3 id="方法二：修改模型适应参数"><a href="#方法二：修改模型适应参数" class="headerlink" title="方法二：修改模型适应参数"></a>方法二：修改模型适应参数</h3><p>修改分辨率下降的地方，以改变模型对输入尺寸的要求删除一个Pooling，使224*224变为可接收112*112增加一个Pooling，使224*224变为可接收448*448卷积步长stride&#x3D;2的，改为stide&#x3D;1，使输入可变为112*112卷积步长stride&#x3D;1的，改为stide&#x3D;2，使输入可变为448*448自行设计卷积核大小，stride，池化层数量</p>
           <!--noindex-->
             <div class="post-button">
@@ -467,7 +674,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-22 12:41:03" itemprop="dateModified" datetime="2022-05-22T12:41:03+08:00">2022-05-22</time>
+      <time title="修改时间：2022-05-22 22:14:53" itemprop="dateModified" datetime="2022-05-22T22:14:53+08:00">2022-05-22</time>
     </span>
 
   
@@ -1016,7 +1223,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
