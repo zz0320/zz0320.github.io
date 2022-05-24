@@ -423,7 +423,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-24 18:13:15" itemprop="dateModified" datetime="2022-05-24T18:13:15+08:00">2022-05-24</time>
+      <time title="修改时间：2022-05-24 18:32:26" itemprop="dateModified" datetime="2022-05-24T18:32:26+08:00">2022-05-24</time>
     </span>
 
   
@@ -438,14 +438,6 @@
     <div class="post-body" itemprop="articleBody">
           <p>本文将详细介绍神经网络中常见的五种归一化「包含Weight Norm」</p>
 <iframe src="//player.bilibili.com/player.html?aid=595391170&bvid=BV1Pq4y1a7pH&cid=569272749&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<h2 id="Batch-Normalization「批归一化」"><a href="#Batch-Normalization「批归一化」" class="headerlink" title="Batch Normalization「批归一化」"></a>Batch Normalization「<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html?highlight=batchnorm#torch.nn.BatchNorm2d">批归一化</a>」</h2><iframe src="//player.bilibili.com/player.html?aid=973300661&bvid=BV1X44y1r77r&cid=346242830&page=2" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<p>总结一句话就是：通道级别归一化，贯穿整个mini-batch</p>
-<p>per channel across mini-batch即在<strong>整个Batch的所有样本，在单一维度上进行归一化</strong>。</p>
-<p>论文最初是想通过它用来减少内部协变量转移</p>
-<p>后续有论文指出它可能就是通过在每个小批量上加入噪音来控制模型复杂度，因此没必要跟丢弃法混合使用<br>$$<br>x_{i+1} &#x3D; \gamma \frac{x_{i}-\widehat\mu_b}{\widehat\sigma_b} + \beta<br>$$<br>批量归一化固定小批量中的均值和方差，然后学习出适合的偏移和缩放</p>
-<p>可以<strong>加速收敛速度</strong>，但一般不改变模型精度</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/#more" rel="contents">
