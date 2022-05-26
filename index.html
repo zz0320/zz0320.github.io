@@ -984,7 +984,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
@@ -1002,7 +1002,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/" class="post-title-link" itemprop="url">「目标追踪系列」（一）初识目标追踪</a>
+          <a href="/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">「环境配置」（二）在云服务器上配置mmtracking环境</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1014,7 +1014,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-22 00:00:00 / 修改时间：12:43:42" itemprop="dateCreated datePublished" datetime="2022-05-22T00:00:00+08:00">2022-05-22</time>
+      <time title="创建时间：2022-05-22 00:00:00 / 修改时间：02:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T00:00:00+08:00">2022-05-22</time>
     </span>
 
   
@@ -1027,23 +1027,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="什么是目标追踪"><a href="#什么是目标追踪" class="headerlink" title="什么是目标追踪"></a>什么是目标追踪</h2><blockquote>
-<p>转自知乎「<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/148516834">链接</a>」「<a target="_blank" rel="noopener" href="https://kns.cnki.net/KCMS/detail/11.2109.TP.20190104.1506.016.html?uid=WEEvREcwSlJHSldRa1FhdXNXaEd1OFVOaDdwQ0tCckFuaHBIcFFIbUxkbz0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&v=MDU3Nzk0WXc5TXptUm42ajU3VDNmbHFXTTBDTEw3UjdxZWJ1WnNGaUhrVzd6QkpGWT1LQ0xmWWJHNEg5ak1ybzlHWk90">论文原文</a>」</p>
-</blockquote>
-<p>目标追踪是计算机视觉领域的一个重要问题，目前广泛应用在体育赛事转播、安防监控和无人机、无人车、机器人等领域。下面是一些应用的例子</p>
-<p><img src="https://pic1.zhimg.com/80/v2-531de42fb6687921041aa8a8e6cd2ce8_720w.jpg" alt="田径比赛"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-9b8f472d7c98a1a91b4b93d0d8886b36_720w.jpg" alt="足球比赛"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-deee3ca02a16a4ac0d098acb2390cfac_720w.jpg" alt="车辆追踪"></p>
-<h2 id="目标追踪任务分类"><a href="#目标追踪任务分类" class="headerlink" title="目标追踪任务分类"></a>目标追踪任务分类</h2><h3 id="从目标追踪的用途出发，目标追踪可以分为以下几种任务"><a href="#从目标追踪的用途出发，目标追踪可以分为以下几种任务" class="headerlink" title="从目标追踪的用途出发，目标追踪可以分为以下几种任务"></a>从目标追踪的用途出发，目标追踪可以分为以下几种任务</h3><p><strong>单目标追踪</strong> - 给定一个目标，追踪这个目标的位置。</p>
-<p><strong>多目标追踪</strong> - 追踪多个目标的位置</p>
-<p><strong>Person Re-ID</strong> - 行人重识别，是利用计算机视觉技术判断图像或者视频序列中是否存在特定行人的技术。广泛被认为是一个图像检索的子问题。给定一个监控行人图像，检索跨设备下的该行人图像。旨在弥补固定的摄像头的视觉局限，并可与行人检测&#x2F;行人追踪技术相结合。</p>
-<p><strong>MTMCT</strong> - 多目标多摄像头追踪（Multi-target Multi-camera Tracking），追踪多个摄像头拍摄的多个人</p>
-<p><strong>姿态追踪</strong> - 追踪人的姿态</p>
-<h3 id="按照任务计算类型又可以分为以下2类"><a href="#按照任务计算类型又可以分为以下2类" class="headerlink" title="按照任务计算类型又可以分为以下2类"></a>按照任务计算类型又可以分为以下2类</h3><p><strong>在线追踪</strong> - 在线追踪需要实时处理任务，通过过去和现在帧来追踪未来帧中物体的位置。</p>
-<p><strong>离线追踪</strong> - 离线追踪是离线处理任务，可以通过过去、现在和未来的帧来推断物体的位置，因此准确率会在线追踪高。</p>
+          <p>参考文章「<a target="_blank" rel="noopener" href="https://mmtracking.readthedocs.io/zh_CN/latest/"><strong>mmtrack文档</strong></a>」</p>
+<h3 id="在恒源云下-新建Pytorch1-11-CUDA-1-10-0的环境"><a href="#在恒源云下-新建Pytorch1-11-CUDA-1-10-0的环境" class="headerlink" title="在恒源云下 新建Pytorch1.11 CUDA 1.10.0的环境"></a>在恒源云下 新建Pytorch1.11 CUDA 1.10.0的环境</h3><h3 id="安装VOT数据集测试评估库"><a href="#安装VOT数据集测试评估库" class="headerlink" title="安装VOT数据集测试评估库"></a>安装VOT数据集测试评估库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install git+https://github.com/votchallenge/toolkit.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装mmcv-full"><a href="#安装mmcv-full" class="headerlink" title="安装mmcv-full"></a>安装mmcv-full</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.5.0 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10.0/index.html</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装mmdet"><a href="#安装mmdet" class="headerlink" title="安装mmdet"></a>安装mmdet</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmdet</span><br></pre></td></tr></table></figure>
+
+<h3 id="将mmtracking克隆到本地"><a href="#将mmtracking克隆到本地" class="headerlink" title="将mmtracking克隆到本地"></a>将mmtracking克隆到本地</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/open-mmlab/mmtracking.git</span><br><span class="line">cd mmtracking</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装必备依赖"><a href="#安装必备依赖" class="headerlink" title="安装必备依赖"></a>安装必备依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install setuptools==58.2.0 # 这步非常重要 新版本不再支持easy_install </span><br><span class="line">pip install -v -e .  # or &quot;python setup.py develop&quot;</span><br><span class="line">sudo apt-get install libglib2.0-0</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/#more" rel="contents">
+              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
