@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="CrossEntrop Loss用于语义分割任务的最常用损失函数是在数据分布层面的像素级交叉熵损失，这种损失会逐个检查每个像素的像素值，将对每个像素类别的预测结果（概率分布向量）与one-hot编码标签向量进行比较。 假设我们需要对每个像素的预测类别有5个，则预测的概率分布向量长度为5： 每个像素对应的损失函数为：$$pixel\ loss &#x3D; -\sum_{classes}y_{tru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「深度学习基础」语义分割损失函数">
+<meta property="og:url" content="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="陨石kk的博客">
+<meta property="og:description" content="CrossEntrop Loss用于语义分割任务的最常用损失函数是在数据分布层面的像素级交叉熵损失，这种损失会逐个检查每个像素的像素值，将对每个像素类别的预测结果（概率分布向量）与one-hot编码标签向量进行比较。 假设我们需要对每个像素的预测类别有5个，则预测的概率分布向量长度为5： 每个像素对应的损失函数为：$$pixel\ loss &#x3D; -\sum_{classes}y_{tru">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnn177m4j20zk0g1gmg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnowwhtrj20zk06owez.jpg">
+<meta property="article:published_time" content="2022-05-23T08:25:27.000Z">
+<meta property="article:modified_time" content="2022-05-26T10:04:58.346Z">
+<meta property="article:author" content="陨石kk">
+<meta property="article:tag" content="深度学习基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnn177m4j20zk0g1gmg.jpg">
+
+
+<link rel="canonical" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/","path":"2022/05/23/「深度学习基础」语义分割损失函数/","title":"「深度学习基础」语义分割损失函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>「深度学习基础」语义分割损失函数 | 陨石kk的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">陨石kk的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CrossEntrop-Loss"><span class="nav-number">1.</span> <span class="nav-text">CrossEntrop Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weighted-Loss"><span class="nav-number">2.</span> <span class="nav-text">Weighted Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Focal-Loss"><span class="nav-number">3.</span> <span class="nav-text">Focal Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dice-Soft-Loss"><span class="nav-number">4.</span> <span class="nav-text">Dice Soft Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Soft-IoU-Loss"><span class="nav-number">5.</span> <span class="nav-text">Soft IoU Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="陨石kk"
+      src="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">陨石kk</p>
+  <div class="site-description" itemprop="description">无限进步</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zz0320" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zz0320" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zyc160378629@gmail.com" title="E-Mail → mailto:zyc160378629@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="「深度学习基础」语义分割损失函数 | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「深度学习基础」语义分割损失函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 16:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T16:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-26 18:04:58" itemprop="dateModified" datetime="2022-05-26T18:04:58+08:00">2022-05-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="CrossEntrop-Loss"><a href="#CrossEntrop-Loss" class="headerlink" title="CrossEntrop Loss"></a>CrossEntrop Loss</h2><p>用于语义分割任务的最常用损失函数是在<strong>数据分布</strong>层面的<strong>像素级交叉熵</strong>损失，这种损失会逐个检查每个像素的像素值，将对每个像素类别的预测结果（概率分布向量）与one-hot编码标签向量进行比较。</p>
+<p>假设我们需要对每个像素的预测类别有5个，则预测的概率分布向量长度为5：</p>
+<p>每个像素对应的损失函数为：<br>$$<br>pixel\ loss &#x3D; -\sum_{classes}y_{true}log(y_{pred})<br>$$<br>整个图像的损失就是对每个像素的损失求平均值</p>
+<p>特别注意的是，$binary\ entropy\ loss$是针对类别只有两个的情况，简称$bce\ loss$，损失函数公式为：<br>$$<br>bce\ loss &#x3D; -y_{true}log(y_{pred}) - (1 - y_{true})log(1 - y_{pred})<br>$$</p>
+<span id="more"></span>
+
+<h2 id="Weighted-Loss"><a href="#Weighted-Loss" class="headerlink" title="Weighted Loss"></a>Weighted Loss</h2><p>由于交叉熵损失会分别评估每个像素的类别预测，然后对所有像素的损失进行平均，因此我们实质上是在对图像中的每个像素进行平等地学习。如果<strong>多个类在图像中的分布不均衡</strong>，那么这可能导致训练过程由像素数量多的类所主导，即<strong>模型会主要学习数量多的类别样本的特征</strong>，并且学习出来的模型会更<strong>偏向将像素预测为该类别</strong>。</p>
+<p>FCN论文和U-Net论文中针对这个问题，对<strong>输出概率分布</strong>向量中的<strong>每个值</strong>进行<strong>加权</strong>，即希望模型更加关注<strong>数量较少的样本</strong>，以缓解图像中存在的<strong>类别不均衡</strong>问题。</p>
+<p>比如对于二分类，正负样本比例为1: 99，此时模型将所有样本都预测为负样本，那么准确率仍有99%这么高，但其实该模型没有任何使用价值。</p>
+<p>为了平衡这个差距，就对<strong>正样本</strong>和<strong>负样本</strong>的损失赋予<strong>不同的权重</strong>，带权重的二分类损失函数公式如下：<br>$$<br>pose\underline{}weight &#x3D; \frac{num\underline{}neg}{num\underline{}pos}<br>$$</p>
+<p>$$<br>loss &#x3D; -pos\underline{}weight\times y_{true}log(y_{pred}) - (1-y_{true})log(1-y_{pred})<br>$$</p>
+<p>要减少假阴性样本的数量，可以增大 pos_weight；要减少假阳性样本的数量，可以减小 pos_weight</p>
+<h2 id="Focal-Loss"><a href="#Focal-Loss" class="headerlink" title="Focal Loss"></a>Focal Loss</h2><p>上面针对不同类别的像素数量不均衡提出了改进方法，但有时还需要将像素分为难学习和容易学习这两种样本。</p>
+<p>容易学习的样本模型可以很轻松地将其预测正确，模型只要将大量容易学习的样本分类正确，loss就可以减小很多，从而导致模型不怎么顾及难学习的样本，所以我们要想办法让模型更加关注难学习的样本。</p>
+<p>对于较难学习的样本，将 bce loss 修改为：<br>$$<br>-(1-y_{pred})^\gamma \times y_{true}log(y_{pred})-y_{pred}^{\gamma}\times(1-y_{true})log(1-y_{pred})<br>$$<br>其中的 $\gamma$通常设定为2</p>
+<p>举个例子，预测一个正样本，如果预测结果为0.95，这是一个容易学习的样本，有$(1-0.95)^{2}&#x3D;0.0025$ ，损失直接减少为原来的1&#x2F;400</p>
+<p>而如果预测结果为0.4，这是一个难学习的样本，有$(1-0.5)^2&#x3D;0.25$ ，损失减小为原来的1&#x2F;4，虽然也在减小，但是相对来说，减小的程度小得多</p>
+<p>所以通过这种修改，就可以使模型更加专注于学习难学习的样本。</p>
+<p>而将这个修改和对正负样本不均衡的修改合并在一起，就是大名鼎鼎的 $focal\ loss$：<br>$$<br>-\alpha(1-y_{pred})^{\gamma}\times y_{true}log(y_{pred}) - (1-\alpha)y_{pred}^{\gamma}\times(1-y_{true})log(1-y_{pred})<br>$$</p>
+<h2 id="Dice-Soft-Loss"><a href="#Dice-Soft-Loss" class="headerlink" title="Dice Soft Loss"></a>Dice Soft Loss</h2><p>语义分割任务中常用的还有一个基于 $Dice$ 系数的损失函数，该系数实质上是两个样本之间重叠的度量，也即在<strong>区域</strong>上的度量。此度量范围为 $[0,1]$，其中 $Dice$ 系数为1表示完全重叠。$Dice$ 系数最初是用于二进制数据的，可以计算为：<br>$$<br>Dice &#x3D; \frac{2|A \cap B|}{|A| + |B|}<br>$$<br>$|A\cap B|$代表集合A和B之间的公共元素，并且$|A|$代表集合A中的元素数量（对于集合B同理）</p>
+<p>$|A|$和$|B|$分别表示$A$ 、$B$的元素数量「近似成元素和」</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnn177m4j20zk0g1gmg.jpg" style="zoom: 33%;" />
+
+<p>对于在预测的分割掩码上评估Dice系数，我们可以将$|A\cap B|$近似为预测掩码和标签掩码之间的逐元素乘法，然后对结果矩阵求和</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnowwhtrj20zk06owez.jpg"></p>
+<p>计算 $Dice$ 系数的分子中有一个2，那是因为分母中对两个集合的元素个数求和，两个集合的共同元素被加了两次。为了设计一个可以最小化的损失函数，可以简单地使用 。这种损失函数被称为 $Soft\ Dice\ loss$，这是因为我们直接使用预测出的概率，而不是使用阈值将其转换成一个二进制掩码。</p>
+<p>$Dice\ Loss$是针对前景比例太小的问题提出的，$Dice$系数源于二分类，本质上是衡量两个样本的重叠部分。</p>
+<p>对于神经网络的输出，分子与我们的预测和标签之间的共同激活有关，而分母分别与每个掩码中的激活数量有关，这具有<strong>根据标签掩码的尺寸对损失进行归一化</strong>的效果</p>
+<p>对于每个类别的$mask$，都计算一个 $Dice$ 损失：<br>$$<br>1 - \frac{2\sum_{pixel}y_{true}y_{pred}}{\sum_{pixel}{y_{true}^2}+{y_{pred}^2}}<br>$$<br>将每个类的 $Dice$ 损失求和取平均，得到最后的 $Dice\  Soft\  Loss$。</p>
+<p>代码实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">soft_dice_loss</span>(<span class="params">y_true, y_pred, epsilon=<span class="number">1e-6</span></span>): </span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; </span></span><br><span class="line"><span class="string">    Soft dice loss calculation for arbitrary batch size, number of classes, and number of spatial dimensions.</span></span><br><span class="line"><span class="string">    Assumes the `channels_last` format.</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        y_true: b x X x Y( x Z...) x c One hot encoding of ground truth</span></span><br><span class="line"><span class="string">        y_pred: b x X x Y( x Z...) x c Network output, must sum to 1 over c channel (such as after softmax) </span></span><br><span class="line"><span class="string">        epsilon: Used for numerical stability to avoid divide by zero errors</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    # References</span></span><br><span class="line"><span class="string">        V-Net: Fully Convolutional Neural Networks for Volumetric Medical Image Segmentation </span></span><br><span class="line"><span class="string">        https://arxiv.org/abs/1606.04797</span></span><br><span class="line"><span class="string">        More details on Dice loss formulation </span></span><br><span class="line"><span class="string">        https://mediatum.ub.tum.de/doc/1395260/1395260.pdf (page 72)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Adapted from https://github.com/Lasagne/Recipes/issues/99#issuecomment-347775022</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># skip the batch and class axis for calculating Dice score</span></span><br><span class="line">    axes = <span class="built_in">tuple</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(y_pred.shape)-<span class="number">1</span>)) </span><br><span class="line">    numerator = <span class="number">2.</span> * np.<span class="built_in">sum</span>(y_pred * y_true, axes)</span><br><span class="line">    denominator = np.<span class="built_in">sum</span>(np.square(y_pred) + np.square(y_true), axes)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> - np.mean(numerator / (denominator + epsilon)) <span class="comment"># average over classes and batch</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Soft-IoU-Loss"><a href="#Soft-IoU-Loss" class="headerlink" title="Soft IoU Loss"></a>Soft IoU Loss</h2><p>前面我们知道计算 $Dice$ 系数的公式，其实也可以表示为：<br>$$<br>Dice &#x3D; \frac{2|A \cap B|}{|A| + |B|}&#x3D;\frac{2TP}{2TP+FP+FN}<br>$$<br>其中 TP 为真阳性样本，FP 为假阳性样本，FN 为假阴性样本。分子和分母中的 TP 样本都加了两次。</p>
+<p>IoU 的计算公式和这个很像，区别就是 TP 只计算一次：<br>$$<br>IoU &#x3D; \frac{|A \cap B|}{|A| + |B| - |A \cap B|}&#x3D;\frac{TP}{TP+FP+FN}<br>$$<br>和$Dice\  Soft\  loss$一样，通过$IoU$计算损失也是使用预测的概率值：<br>$$<br>loss &#x3D; -\frac{1}{|C|}\sum_{c}\frac{\sum_{pixels}y_{true}y_{pred}}{\sum_{pixels}(y_{true}+y_{pred}-y_{true}y_{pred})}<br>$$<br>其中，$C$表示总的类别数</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>交叉熵损失把每个像素都当作一个独立样本进行预测，而 $Dice\  Loss$ 和 $IoU\ Loss$ 则以一种更“整体”的方式来看待最终的预测输出。</p>
+<p>这两类损失是针对不同情况，各有优点和缺点，在实际应用中，可以同时使用这两类损失来进行互补。</p>
+<blockquote>
+<p>本文借鉴自「<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GkiV_KMWLcxiFnqFavtuwA">链接🔗</a>」</p>
+<p><strong>参考：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.jeremyjordan.me/semantic-segmentation/">An overview of semantic image segmentation.</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@junma11/loss-functions-for-medical-image-segmentation-a-taxonomy-cefa5292eec0">Loss Functions for Medical Image Segmentation</a>.</p>
+<p><a target="_blank" rel="noopener" href="https://lars76.github.io/neural-networks/object-detection/losses-for-segmentation/">Losses for Image Segmentation.</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" rel="tag"># 深度学习基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/" rel="prev" title="「Kaggle系列」Happy Whale">
+                  <i class="fa fa-chevron-left"></i> 「Kaggle系列」Happy Whale
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/27/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%8D%E8%AF%BB%E5%8D%95%E9%98%B6%E6%AE%B5%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%99%A8SSD/" rel="next" title="「论文系列」（二）重读单阶段目标检测器SSD">
+                  「论文系列」（二）重读单阶段目标检测器SSD <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陨石kk</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+--!>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

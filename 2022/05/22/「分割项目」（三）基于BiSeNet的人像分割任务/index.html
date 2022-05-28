@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="BiSeNet模型介绍 「参考文章」  BiSeNet分析了模型结构层面加速的方法，并提出双分支的BiSeNet来加速 在输入和模型上改动原始图像resize缺点：丢失空间信息（spatial information ） 删减网络层，以提速缺点：模型容量下降，精度降低">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「分割项目」（三）基于BiSeNet的网页端人像分割任务">
+<meta property="og:url" content="https://username.github.io/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8EBiSeNet%E7%9A%84%E4%BA%BA%E5%83%8F%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/index.html">
+<meta property="og:site_name" content="陨石kk的博客">
+<meta property="og:description" content="BiSeNet模型介绍 「参考文章」  BiSeNet分析了模型结构层面加速的方法，并提出双分支的BiSeNet来加速 在输入和模型上改动原始图像resize缺点：丢失空间信息（spatial information ） 删减网络层，以提速缺点：模型容量下降，精度降低">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjq8b3jwj20zk0etgnv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjr92kljj20k00nomz4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjrxi3oej20zk0g3ta1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjs9dnt1j20zk0fv403.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hk5l3ar7j20k00p20tv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hkf9crvtj20k00ka76o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hkhip0rnj20nb0k00vg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hki1lxs8j20nu0k076q.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hmq8ya63j20zk0i1whm.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hn1oplx2j20qb0k00ue.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnn177m4j20zk0g1gmg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnowwhtrj20zk06owez.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnri2npkj20tg0k00wd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnux5dalj20w00k040s.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnw7rifmj20zk0dlmzt.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5qq3pxzj20vy0k0dhh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5pkk8kuj20uf0k075d.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5xch4vsj20r00k0419.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5xh29n5j20qx0k0wi6.jpg">
+<meta property="og:image" content="https://username.github.io/Users/kenton/Library/Application%20Support/typora-user-images/image-20220523111250059.png">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60hzctuj20k00xzmzd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60o4aesj20k00kct9z.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60vjb48j20ks0k0dgn.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i61rhdi1j20k00rxq4a.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6205jehj20k00sfdh9.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i627k45zj20k00snq4y.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i62est1tj20k00m6wfg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i63do3hjj20zi0k0765.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6bl6su6j20r30k0wfd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6cui1iyj20k00k8402.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6cy80bwj20k00kptab.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6maabzdj20k00ka76o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6mha97nj20nb0k00vg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i70dea2mj20zk0d70vp.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74bws0dj20k00qnmzi.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74fflk4j20k00qowg4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74eig6xj20k00qoabl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74dzwlcj20k00qo75d.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74d20x4j20k00qo40w.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i7jqcqcrj20zk0ab0u4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i7mltxx3j20x30k00uh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i99mh27pj20zk0je75x.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9vww0iaj20xw0k0dhp.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9xjyxyuj20zk0j478m.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9xngyfjj20zk0d7ju5.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2ic4tsrugj20lk0p0jsy.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iclshq1vj213x0u0mxz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icltpeihj213x0u0js9.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iclxx5hfj21400u075a.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icm24007j21400u0aaz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icm5vgmjj213z0u0dgs.jpg">
+<meta property="article:published_time" content="2022-05-22T10:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-24T08:03:33.578Z">
+<meta property="article:author" content="陨石kk">
+<meta property="article:tag" content="分割项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjq8b3jwj20zk0etgnv.jpg">
+
+
+<link rel="canonical" href="https://username.github.io/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8EBiSeNet%E7%9A%84%E4%BA%BA%E5%83%8F%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8EBiSeNet%E7%9A%84%E4%BA%BA%E5%83%8F%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/","path":"2022/05/22/「分割项目」（三）基于BiSeNet的人像分割任务/","title":"「分割项目」（三）基于BiSeNet的网页端人像分割任务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>「分割项目」（三）基于BiSeNet的网页端人像分割任务 | 陨石kk的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">陨石kk的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BiSeNet%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">BiSeNet模型介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E8%BE%93%E5%85%A5%E5%92%8C%E6%A8%A1%E5%9E%8B%E4%B8%8A%E6%94%B9%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">在输入和模型上改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BB%93%E6%9E%84%E4%B8%8A%E6%94%B9%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">在结构上改动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E5%83%8F%E5%88%86%E5%89%B2%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.</span> <span class="nav-text">人像分割数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Portrait-Dataset-2000%E3%80%8C%E9%93%BE%E6%8E%A5%F0%9F%94%97%E3%80%8D"><span class="nav-number">2.1.</span> <span class="nav-text">Portrait Dataset 2000「链接🔗」</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Portrait-Dataset-34427%E3%80%8C%E9%93%BE%E6%8E%A5%F0%9F%94%97%E3%80%8D"><span class="nav-number">2.2.</span> <span class="nav-text">Portrait Dataset 34427「链接🔗」</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dice-Loss"><span class="nav-number">3.1.</span> <span class="nav-text">Dice Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CE-Dice-Loss"><span class="nav-number">3.2.</span> <span class="nav-text">CE + Dice Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Focal-Loss%E3%80%8C%E9%93%BE%E6%8E%A5%F0%9F%94%97%E3%80%8D"><span class="nav-number">3.3.</span> <span class="nav-text">Focal Loss「链接🔗」</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%B0%83%E6%95%B4%E7%AD%96%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">学习率调整策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Warmup-Cosine"><span class="nav-number">4.1.</span> <span class="nav-text">Warmup + Cosine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA"><span class="nav-number">5.</span> <span class="nav-text">数据增强</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E5%B7%A5%E5%85%B7-Albumentations%E3%80%8C%E5%AE%98%E7%BD%91%E3%80%8D%E3%80%8CGitHub%E3%80%8D"><span class="nav-number">5.1.</span> <span class="nav-text">数据增强工具-Albumentations「官网」「GitHub」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pixel-level"><span class="nav-number">5.1.1.</span> <span class="nav-text">Pixel level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spatial-level"><span class="nav-number">5.1.2.</span> <span class="nav-text">Spatial level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Albumentations-%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E4%BD%BF%E7%94%A8%E9%80%BB%E8%BE%91"><span class="nav-number">5.1.3.</span> <span class="nav-text">Albumentations 图像分割使用逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95"><span class="nav-number">5.1.4.</span> <span class="nav-text">图像分割常用数据增强方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%89%B2%E5%BD%A9%E6%89%B0%E5%8A%A8"><span class="nav-number">5.1.4.1.</span> <span class="nav-text">色彩扰动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="nav-number">5.1.4.2.</span> <span class="nav-text">仿射变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%B9%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="nav-number">5.1.4.3.</span> <span class="nav-text">弹性变换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83"><span class="nav-number">5.2.</span> <span class="nav-text">额外数据训练</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5Portrait-Dataset-34427"><span class="nav-number">5.2.1.</span> <span class="nav-text">加入Portrait Dataset 34427</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ECOCO%E8%87%AA%E5%88%B6%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">5.2.2.</span> <span class="nav-text">基于COCO自制数据集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%B0%81%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">模型封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TTA%EF%BC%88%E6%B5%8B%E8%AF%95%E6%97%B6%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">TTA（测试时数据增强）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AlexNet-%E7%9A%84TTA%E6%96%B9%E6%B3%95"><span class="nav-number">7.1.</span> <span class="nav-text">AlexNet 的TTA方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84TTA"><span class="nav-number">7.2.</span> <span class="nav-text">图像分割的TTA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyTorch%E7%9A%84TTA%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94TTAch"><span class="nav-number">7.3.</span> <span class="nav-text">PyTorch的TTA工具——TTAch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TTAch%E4%BD%BF%E7%94%A8%E9%80%BB%E8%BE%91"><span class="nav-number">7.3.1.</span> <span class="nav-text">TTAch使用逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.3.2.</span> <span class="nav-text">具体实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">推理内存分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyTorch%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="nav-number">8.1.</span> <span class="nav-text">PyTorch的内存分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%A0%E7%94%A8%E6%98%BE%E5%AD%98%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">8.1.1.</span> <span class="nav-text">占用显存的数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Badcase%E5%88%86%E6%9E%90"><span class="nav-number">9.</span> <span class="nav-text">Badcase分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%8F%90%E4%BA%A4"><span class="nav-number">10.</span> <span class="nav-text">模型提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EFlask%E5%B0%86%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%E5%88%B0web%E4%B8%8A"><span class="nav-number">11.</span> <span class="nav-text">基于Flask将模型部署到web上</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flask"><span class="nav-number">11.1.</span> <span class="nav-text">Flask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">11.2.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Requests%E5%BA%93"><span class="nav-number">11.3.</span> <span class="nav-text">Requests库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">11.3.1.</span> <span class="nav-text">HTTP协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python%E7%9A%84HTTP%E5%BA%93%E2%80%94%E2%80%94Requests"><span class="nav-number">11.3.2.</span> <span class="nav-text">Python的HTTP库——Requests</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-number">12.</span> <span class="nav-text">代码编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5"><span class="nav-number">13.</span> <span class="nav-text">测试阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%80"><span class="nav-number">13.1.</span> <span class="nav-text">测试一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BA%8C"><span class="nav-number">13.2.</span> <span class="nav-text">测试二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%89"><span class="nav-number">13.3.</span> <span class="nav-text">测试三</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="陨石kk"
+      src="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">陨石kk</p>
+  <div class="site-description" itemprop="description">无限进步</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zz0320" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zz0320" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zyc160378629@gmail.com" title="E-Mail → mailto:zyc160378629@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8EBiSeNet%E7%9A%84%E4%BA%BA%E5%83%8F%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="「分割项目」（三）基于BiSeNet的网页端人像分割任务 | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「分割项目」（三）基于BiSeNet的网页端人像分割任务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 18:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T18:00:00+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-24 16:03:33" itemprop="dateModified" datetime="2022-05-24T16:03:33+08:00">2022-05-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="BiSeNet模型介绍"><a href="#BiSeNet模型介绍" class="headerlink" title="BiSeNet模型介绍"></a>BiSeNet模型介绍</h2><blockquote>
+<p>「<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41475332">参考文章</a>」</p>
+</blockquote>
+<p>BiSeNet分析了模型结构层面加速的方法，并提出双分支的BiSeNet来加速</p>
+<h3 id="在输入和模型上改动"><a href="#在输入和模型上改动" class="headerlink" title="在输入和模型上改动"></a>在输入和模型上改动</h3><p>原始图像resize缺点：丢失空间信息（spatial information ）</p>
+<p>删减网络层，以提速缺点：模型容量下降，精度降低</p>
+<span id="more"></span>
+
+<h3 id="在结构上改动"><a href="#在结构上改动" class="headerlink" title="在结构上改动"></a>在结构上改动</h3><p>U型弥补丢失的空间信息的缺点：慢！</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjq8b3jwj20zk0etgnv.jpg"></p>
+<p>BiSeNet主要有两大分支构成，分别是<strong>Spatial分支</strong>和<strong>Context分支</strong></p>
+<p><strong>Spatial分支</strong>采用小步长的策略，少降低分辨率，以保留更多空间信息</p>
+<p><strong>Context分支</strong>采用快速下降分辨率的策略，使特征具有丰富的感受野最后利用特征融合模块FFM，将两个分支特征进行融合即可输出</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjr92kljj20k00nomz4.jpg" style="zoom:50%;" />
+
+<p>ARM：Attention Refinment Module注意力机制模块</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjrxi3oej20zk0g3ta1.jpg" style="zoom: 33%;" />
+
+<p>FFM：Feature Fusion Module，特征融合模块，设计一个能将特征图融合在一起的模块</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hjs9dnt1j20zk0fv403.jpg" style="zoom: 33%;" />
+
+<p>辅助损失：在Context分支输出的特征图直接用于计算分割结果，而Feature map 输入到一个conv层用于输出分割结果</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hk5l3ar7j20k00p20tv.jpg" style="zoom: 33%;" />
+$$
+L(X;W) = l_p(X;W) + \alpha \sum_{i=2}^{K}l_i(X_i;W)
+$$
+
+<h2 id="人像分割数据集"><a href="#人像分割数据集" class="headerlink" title="人像分割数据集"></a>人像分割数据集</h2><h3 id="Portrait-Dataset-2000「链接🔗」"><a href="#Portrait-Dataset-2000「链接🔗」" class="headerlink" title="Portrait Dataset 2000「链接🔗」"></a>Portrait Dataset 2000「<a target="_blank" rel="noopener" href="http://www.cse.cuhk.edu.hk/~leojia/projects/automatting/index.html">链接</a>🔗」</h3><p>Portrait 数据集由香港中文大学于2016年发布，是当前标注质量较高的数据集之一。共有2000张自拍人像图像，1700训练、300测试</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hkf9crvtj20k00ka76o.jpg" style="zoom:50%;" />
+
+<h3 id="Portrait-Dataset-34427「链接🔗」"><a href="#Portrait-Dataset-34427「链接🔗」" class="headerlink" title="Portrait Dataset 34427「链接🔗」"></a>Portrait Dataset 34427「<a target="_blank" rel="noopener" href="https://github.com/aisegmentcn/matting_human_datasets">链接</a>🔗」</h3><p>由北京玩星汇聚科技有限公司高质量标注，原始图片来源于Flickr、百度、淘宝。经过人脸检测和区域裁剪后生成了600*800的半身人像。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hkhip0rnj20nb0k00vg.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hki1lxs8j20nu0k076q.jpg"></th>
+</tr>
+</thead>
+</table>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>图像分割任务中，损失函数是一大研究方向，主要以「基于数据分布的$CE$」和 「基于区域的$Dice$」为基础进行展开</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hmq8ya63j20zk0i1whm.jpg" style="zoom:67%;" />
+
+<h3 id="Dice-Loss"><a href="#Dice-Loss" class="headerlink" title="Dice Loss"></a>Dice Loss</h3><p>$Dice Loss$ 来自<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1606.04797">文献</a>，是从Dice系数推广得到的损失函数。</p>
+<p>$Dice$ 系数是一种集合相似度度量函数，是从<strong>区域角度</strong>衡量两个集合的相似度。（$CE Loss$是从概率分布角度）</p>
+<p>$Dice$ 系数值域为 $[0, 1]$ ，两个集合完全重叠时为$1$， 完全不重叠时为$0$，计算公式如下<br>$$<br>Dice &#x3D; \frac{2TP}{FP + 2TP + FN} \Leftrightarrow  \frac{2*gtmask\cap predmask}{gtmask + predmask}<br>$$<br><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hn1oplx2j20qb0k00ue.jpg" style="zoom:50%;" /></p>
+<p>具体来讲<br>$$<br>Dice Loss &#x3D; 1 - \frac{2|A\cap B|}{|A| + |B|}<br>$$<br>值域$[0, 1]$，$loss$值越小，重合程度越高；</p>
+<p>分母的计算：$|A|$和$|B|$分别表示$A$ 、$B$的元素数量「近似成元素和」</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnn177m4j20zk0g1gmg.jpg" style="zoom: 33%;" />
+
+<p>分子的计算：$A$ 、$B$的交集，用点乘，</p>
+<p>$Soft Dice Loss$：Prediction不将它们转换为二进制mask</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnowwhtrj20zk06owez.jpg"></p>
+<h3 id="CE-Dice-Loss"><a href="#CE-Dice-Loss" class="headerlink" title="CE + Dice Loss"></a>CE + Dice Loss</h3><p>采用$CE + Dice$ ，权重比例$1:1$</p>
+<p>从<strong>概率分布</strong>和<strong>区域</strong>两个角度衡量模型</p>
+<h3 id="Focal-Loss「链接🔗」"><a href="#Focal-Loss「链接🔗」" class="headerlink" title="Focal Loss「链接🔗」"></a>Focal Loss「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1708.02002">链接</a>🔗」</h3><p>$Focal Loss$：针对Two-Stage目标检测RPN网络中<strong>正负样本严重不均衡</strong>及<strong>困难样本</strong>提出的Loss		</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnri2npkj20tg0k00wd.jpg" style="zoom:33%;" />
+
+<p>解决不均衡：增加类别权重 $\alpha_t$<br>$$<br>CE(p_t) &#x3D; -\alpha_t log(p_t)<br>$$<br>解决困难样本：增加难度权重 $\gamma$<br>$$<br>FL(p_t) &#x3D; -(1 - p_t)^\gamma log(p_t)<br>$$</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnux5dalj20w00k040s.jpg" style="zoom: 33%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2hnw7rifmj20zk0dlmzt.jpg" style="zoom:50%;" /></th>
+</tr>
+</thead>
+</table>
+<p>$$<br>FL_{综合}(p_t) &#x3D; - \alpha_t ·(1-p_t)^\gamma · log(p_t)<br>$$</p>
+<p>其中 $\alpha_t$为<strong>类别权重</strong>，$(1-p_t)^\gamma$为<strong>难度权重</strong></p>
+<h2 id="学习率调整策略"><a href="#学习率调整策略" class="headerlink" title="学习率调整策略"></a>学习率调整策略</h2><p>良好的学习率调整可直接影响模型精度：基本原则从稳定状态逐步降低学习率</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5qq3pxzj20vy0k0dhh.jpg" style="zoom: 50%;" />
+
+<h3 id="Warmup-Cosine"><a href="#Warmup-Cosine" class="headerlink" title="Warmup + Cosine"></a>Warmup + Cosine</h3><p>每个iteration逐渐增大至初始学习率，然后余弦下降至终止学习率</p>
+<p>​	batches：一个Epoch对应几个iteration</p>
+<p>​	max_epochs：总共跑几个Epoch</p>
+<p>​	base_lr：初始学习率</p>
+<p>​	final_lr：终止学习率</p>
+<p>​	warmup_epochs：warmup多久</p>
+<p>​	warmup_init_lr：warmup初始学习率是多少</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5pkk8kuj20uf0k075d.jpg" style="zoom: 50%;" />
+
+<h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><h3 id="数据增强工具-Albumentations「官网」「GitHub」"><a href="#数据增强工具-Albumentations「官网」「GitHub」" class="headerlink" title="数据增强工具-Albumentations「官网」「GitHub」"></a>数据增强工具-Albumentations「<a target="_blank" rel="noopener" href="https://albumentations.ai/">官网</a>」「<a target="_blank" rel="noopener" href="https://github.com/albumentations-team/albumentations">GitHub</a>」</h3><p>PyTorch提供的transforms模块大部分不适用于图像分割及目标检测任务</p>
+<p>图像分割和目标检测，在进行空间变换，需要对图像和标签做相同的变换</p>
+<p>Albumentations——广泛应用于工业界、学术界、AI竞赛和开源项目中的CV数据增强工具</p>
+<p>​	适用任务：图像分类、图像分割、目标检测、实例分割等</p>
+<p>​	适用领域：自然图像、医疗影像、卫星图像、工业图像等</p>
+<p>​	无缝衔接：可无缝衔接PyTorch、Keras框架</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5xch4vsj20r00k0419.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i5xh29n5j20qx0k0wi6.jpg"></th>
+</tr>
+</thead>
+</table>
+<h4 id="Pixel-level"><a href="#Pixel-level" class="headerlink" title="Pixel level"></a>Pixel level</h4><table>
+<thead>
+<tr>
+<th><img src="/Users/kenton/Library/Application Support/typora-user-images/image-20220523111250059.png" style="zoom: 50%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60hzctuj20k00xzmzd.jpg" style="zoom: 67%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60o4aesj20k00kct9z.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i60vjb48j20ks0k0dgn.jpg"></th>
+</tr>
+</thead>
+</table>
+<h4 id="Spatial-level"><a href="#Spatial-level" class="headerlink" title="Spatial level"></a>Spatial level</h4><table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i61rhdi1j20k00rxq4a.jpg" style="zoom:67%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6205jehj20k00sfdh9.jpg" style="zoom:67%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i627k45zj20k00snq4y.jpg" style="zoom:67%;" /></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i62est1tj20k00m6wfg.jpg" style="zoom:67%;" /></th>
+</tr>
+</thead>
+</table>
+<h4 id="Albumentations-图像分割使用逻辑"><a href="#Albumentations-图像分割使用逻辑" class="headerlink" title="Albumentations 图像分割使用逻辑"></a>Albumentations 图像分割使用逻辑</h4><p>定义好一系列transform方法；同时传入image和mask；返回字典，通过”image”和“mask”获得处理后的数据</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i63do3hjj20zi0k0765.jpg" style="zoom:67%;" />
+
+<h4 id="图像分割常用数据增强方法"><a href="#图像分割常用数据增强方法" class="headerlink" title="图像分割常用数据增强方法"></a>图像分割常用数据增强方法</h4><h5 id="色彩扰动"><a href="#色彩扰动" class="headerlink" title="色彩扰动"></a>色彩扰动</h5><p>ColorJitter (brightness&#x3D;0.2, contrast&#x3D;0.2, saturation&#x3D;0.2, hue&#x3D;0.2, always_apply&#x3D;False, p&#x3D;0.5)</p>
+<p>参数：</p>
+<p>​	brightness: 亮度的偏移幅度。图像给人的直观感受，如果是灰度图像，灰度值越高则图像越亮。</p>
+<p>​	contrast: 对比度偏移幅度。不同颜色最亮处和最暗处之间的差别，影响纹理细节。</p>
+<p>​	saturation：饱和度偏移幅度。饱和度越高，颜色表现越丰富。</p>
+<p>​	hue：色相偏移幅度。</p>
+<p>亮度、对比度和饱和度是数字图像处理中常用概念。 夜晚场景，亮度偏低；雨雾天对比度低</p>
+<h5 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h5><p>Affine (scale&#x3D;None, translate_percent&#x3D;None, translate_px&#x3D;None, rotate&#x3D;None, shear&#x3D;None, interpolation&#x3D;1, cval&#x3D;0, cval_mask&#x3D;0, mode&#x3D;0, fit_output&#x3D;False, always_apply&#x3D;False, p&#x3D;0.5)</p>
+<p>参数：</p>
+<p>​	rotate：旋转角度， int or tuple</p>
+<p>​	shear: 错切，int or tuple</p>
+<p>​	translate_percent：平移，int or tuple</p>
+<p>​	scale：缩放， int or tuple</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6bl6su6j20r30k0wfd.jpg" style="zoom:33%;" />
+
+<h5 id="弹性变换"><a href="#弹性变换" class="headerlink" title="弹性变换"></a>弹性变换</h5><p>ElasticTransform (alpha&#x3D;1, sigma&#x3D;50, alpha_affine&#x3D;50, interpolation&#x3D;1, border_mode&#x3D;4, value&#x3D;None, mask_value&#x3D;None, always_apply&#x3D;False, approximate&#x3D;False, p&#x3D;0.5)</p>
+<p>过程: </p>
+<p>（1）每个像素点(x, y)产生两个-1~1之间的随机数，Δx(x,y)和Δy(x,y)，分别表示该像素点的x方向和y方向的移动距离；</p>
+<p>（2）生成一个以0为均值，以σ为标准差的高斯核k_nn，并用前面的随机数与之做卷积，并将结果作用于原图像。</p>
+<p>使用指导：alpha越小，sigma越大，产生的偏差越小，和原图越接近</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6cui1iyj20k00k8402.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6cy80bwj20k00kptab.jpg"></th>
+</tr>
+</thead>
+</table>
+<h3 id="额外数据训练"><a href="#额外数据训练" class="headerlink" title="额外数据训练"></a>额外数据训练</h3><h4 id="加入Portrait-Dataset-34427"><a href="#加入Portrait-Dataset-34427" class="headerlink" title="加入Portrait Dataset 34427"></a>加入Portrait Dataset 34427</h4><p>基于Portrait Dataset 2000可考虑增加Portrait Dataset 34427数据集训练</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6maabzdj20k00ka76o.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i6mha97nj20nb0k00vg.jpg"></th>
+</tr>
+</thead>
+</table>
+<p>$$<br>PortraitDataSet2000+PortraitDataSet34427&#x3D;NewDataSet(concat)<br>$$</p>
+<h4 id="基于COCO自制数据集"><a href="#基于COCO自制数据集" class="headerlink" title="基于COCO自制数据集"></a>基于COCO自制数据集</h4><p>MS COCO的全称是Microsoft Common Objects in Context，起源于微软于2014年出资标注的Microsoft COCO数据集，数据集以scene understanding为目标。目前为止有语义分割的最大数据集，提供的类别有80 类，有超过33 万张图片，其中20 万张有标注，整个数据集中个体的数目超过150 万个。</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i70dea2mj20zk0d70vp.jpg" style="zoom:33%;" />
+
+<p>常用数据集为 coco2017， 其中训练集118287张图片，验证集有5000张图片物体的标注分为supercategory「超类」 和 category「类」</p>
+<p>$前景图片* \alpha +背景* (1-\alpha) &#x3D;新图像$ </p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74bws0dj20k00qnmzi.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74fflk4j20k00qowg4.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74eig6xj20k00qoabl.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74dzwlcj20k00qo75d.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i74d20x4j20k00qo40w.jpg"></th>
+</tr>
+</thead>
+</table>
+<p>背景图片挑选：尽量符合真实场景，室内照片或者室外照片，不能出现人物</p>
+<h2 id="模型封装"><a href="#模型封装" class="headerlink" title="模型封装"></a>模型封装</h2><blockquote>
+<p>面向对象三大特性之一</p>
+</blockquote>
+<p>面向对象（Object Oriented Programming）三大特性</p>
+<p>​	1.封装（Encapsulation）：隐藏对象的属性和实现细节，仅对外提供公共访问方式</p>
+<p>​	2.继承（Inheritance）：使用已存在的类的定义作为基础建立新类的方法</p>
+<p>​	3.多态（Polymorphism）：”多种状态”，接口的多种不同的实现方式即为多态</p>
+<p><strong>封装好处</strong>：</p>
+<p>​	1.隐藏实现细节，提供公共的访问方式</p>
+<p>​	2.提高了代码的复用性</p>
+<p>​	3.提高安全性</p>
+<p><strong>封装原则</strong>：</p>
+<p>​	1.将不需要对外提供的内容都隐藏起来</p>
+<p>​	2.把属性隐藏，提供公共方法对其访问</p>
+<h2 id="TTA（测试时数据增强）"><a href="#TTA（测试时数据增强）" class="headerlink" title="TTA（测试时数据增强）"></a>TTA（测试时数据增强）</h2><p>测试时将原始数据做不同形式的增强,然后取结果的平均值作为最终结果</p>
+<p>可以进一步提升最终结果的精度，使模型输出更稳定</p>
+<h3 id="AlexNet-的TTA方法"><a href="#AlexNet-的TTA方法" class="headerlink" title="AlexNet 的TTA方法"></a>AlexNet 的TTA方法</h3><p>​	1.图片统一缩放至256*256</p>
+<p>​	2.左上、右上、左下、右下、中心裁剪出5个224*224区域</p>
+<p>​	3.均进行水平翻转，共得到10张224*224图片</p>
+<p>​	4.对10张图片进行推理，得到10个分类概率后取平均值输出</p>
+<h3 id="图像分割的TTA"><a href="#图像分割的TTA" class="headerlink" title="图像分割的TTA"></a>图像分割的TTA</h3><p>旋转、翻转、缩放、像素扰动等</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i7jqcqcrj20zk0ab0u4.jpg" style="zoom:50%;" />
+
+<h3 id="PyTorch的TTA工具——TTAch"><a href="#PyTorch的TTA工具——TTAch" class="headerlink" title="PyTorch的TTA工具——TTAch"></a>PyTorch的TTA工具——TTAch</h3><p>TTAch工具库是一个PyTorch的TTA工具，可实现图像分类、图像分割、关键点检测的TTA方法「<a target="_blank" rel="noopener" href="https://github.com/qubvel/ttach">源代码</a>」</p>
+<h4 id="TTAch使用逻辑"><a href="#TTAch使用逻辑" class="headerlink" title="TTAch使用逻辑"></a>TTAch使用逻辑</h4><p>定义transforms方法将原模型与transforms绑定，生成新模型（nn.Module）</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i7mltxx3j20x30k00uh.jpg" style="zoom:33%;" />
+
+<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><p>在forward中依次执行各transforms原模型forward反变换mask收集结果，输出</p>
+<h2 id="推理内存分析"><a href="#推理内存分析" class="headerlink" title="推理内存分析"></a>推理内存分析</h2><h3 id="PyTorch的内存分析"><a href="#PyTorch的内存分析" class="headerlink" title="PyTorch的内存分析"></a>PyTorch的内存分析</h3><h4 id="占用显存的数据"><a href="#占用显存的数据" class="headerlink" title="占用显存的数据"></a>占用显存的数据</h4><p>​	<strong>模型参数weights</strong>：卷积核权重、BN层的α和β、FC层的权重等</p>
+<p>​	<strong>模型中间变量</strong>：feature maps</p>
+<p>​	<strong>输入输出数据</strong>：input_tensor, outputs_tensor</p>
+<p>值得注意的是，With no_grad() 可解决模型中间变量的占用：是一个上下文管理器,被该语句 wrap 起来的部分将不会track梯度</p>
+<p>中间部分缓存可通过：torch.cuda.empty_cache()删除</p>
+<h2 id="Badcase分析"><a href="#Badcase分析" class="headerlink" title="Badcase分析"></a>Badcase分析</h2><p>训练集的分析作用：剔除异常样本，避免这些样本把模型带偏，就像考试题中的超纲题</p>
+<p>测试集的分析作用：归纳总结哪一类的数据分布好，针对性的做数据增强或者Trick的设计</p>
+<p>​	如光照差的图像表现不好，考虑调整亮度</p>
+<p>​	背景与人物模糊的图像，考虑加高斯模糊</p>
+<p>​	从训练集中找出“样本不均衡”的数据，进行数据增强，如孔洞、头发丝较多等图像进行Fusion操作，增加训练集</p>
+<h2 id="模型提交"><a href="#模型提交" class="headerlink" title="模型提交"></a>模型提交</h2><p>最优的模型：<strong>采用训练集+验证集训练模型</strong></p>
+<p>验证集的作用是调参，当参数确定后，需把手中所有数据用于模型训练，得到最终提交的模型</p>
+<h2 id="基于Flask将模型部署到web上"><a href="#基于Flask将模型部署到web上" class="headerlink" title="基于Flask将模型部署到web上"></a>基于Flask将模型部署到web上</h2><h3 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h3><p>Flask诞生于2010年，是基于Python编写的轻量级Web开发框架Web完成Server框中间的内容</p>
+<p>利用Flask实现Web后端服务，需要两步：</p>
+<p>​	1.设置网址：url </p>
+<p>​	2.设置url响应：响应可能较为复杂，通常通过一个功能函数实现</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i99mh27pj20zk0je75x.jpg" style="zoom:50%;" />
+
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>给<strong>原函数</strong>增加<strong>额外功能</strong>，额外功能“装饰”原函数</p>
+<p>装饰，就是装点、提供一些额外的点缀。在 Python 中的装饰器则是提供了一些额外的功能。例如：计算执行函数所需的时间</p>
+<p>装饰器是一个函数，它接收函数，内部定义新函数，并返回新函数</p>
+<p>装饰器工作逻辑是：当编译器遇到@XXX时，就会将原函数进行装饰，可理解为原函数在编译阶段即被编译器“替换”为装饰器返回的那个函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@clock</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo_decorator</span>(<span class="params">seconds</span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 等价于</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo_decorator</span>(<span class="params">seconds</span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line">foo_decorator = clock(foo_decorator)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Requests库"><a href="#Requests库" class="headerlink" title="Requests库"></a>Requests库</h3><h4 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h4><p>HTTP，Hypertext Transfer Protocol，超文本传输协议是基于“请求与响应”模式的应用层协议</p>
+<p>HTTP协议采用<strong>URL</strong>（Uniform Resource Locator,统一资源定位器）作为<strong>定位网络资源的标识</strong>，URL格式如下：<br>$$<br><a href="https://host[:port][path]">https://host[:port][path]</a><br>$$<br>$host$: 合法的Internet主机域名或IP地址</p>
+<p>$port$: 端口号，缺省端口为80</p>
+<p>$path$: 请求资源的路径HTTP</p>
+<p>URL的理解：URL是路径：URL是通过HTTP协议存取资源的Internet路径，一个URL对应一个数据资源</p>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9vww0iaj20xw0k0dhp.jpg" style="zoom:50%;" />
+
+<h4 id="Python的HTTP库——Requests"><a href="#Python的HTTP库——Requests" class="headerlink" title="Python的HTTP库——Requests"></a>Python的HTTP库——Requests</h4><p>Requests库是Python的简易HTTP协议操作库</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9xjyxyuj20zk0j478m.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2i9xngyfjj20zk0d7ju5.jpg"></th>
+</tr>
+</thead>
+</table>
+<h2 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h2><p>代码框架如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2ic4tsrugj20lk0p0jsy.jpg"></p>
+<p>代码开源在<strong>GitHub，<a target="_blank" rel="noopener" href="https://github.com/zz0320/Portrait_Seg_Flask">点击链接</a>查看</strong></p>
+<h2 id="测试阶段"><a href="#测试阶段" class="headerlink" title="测试阶段"></a>测试阶段</h2><h3 id="测试一"><a href="#测试一" class="headerlink" title="测试一"></a>测试一</h3><blockquote>
+<p>不同输入分辨率下训练BiSeNet，mIoU变化，如112*112,224*224,448*448,512*512等</p>
+</blockquote>
+<p>训练参数</p>
+<table>
+<thead>
+<tr>
+<th>参数类别</th>
+<th>参数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>train_bs</td>
+<td>6</td>
+</tr>
+<tr>
+<td>valid_bs</td>
+<td>2</td>
+</tr>
+<tr>
+<td>workers</td>
+<td>16</td>
+</tr>
+<tr>
+<td>lr_init</td>
+<td>0.01</td>
+</tr>
+<tr>
+<td>factor</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>milestones</td>
+<td>[25, 45]</td>
+</tr>
+<tr>
+<td>weight_decay</td>
+<td>0.0005</td>
+</tr>
+<tr>
+<td>momentum</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>log_interval</td>
+<td>10</td>
+</tr>
+<tr>
+<td>bce_pos_weight</td>
+<td>Tensor(0.7500)</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>训练分辨率</th>
+<th>Train_Acc</th>
+<th>Valid_Acc</th>
+<th>Train_loss&#x2F;Train_miou</th>
+<th>Valid_loss&#x2F;Valid_miou</th>
+<th>Epoch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>112</td>
+<td>98.29%</td>
+<td>96.94%</td>
+<td>0.0405&#x2F;0.9676</td>
+<td>0.0786&#x2F;<strong>0.9504</strong></td>
+<td>24</td>
+</tr>
+<tr>
+<td>224</td>
+<td>99.01%</td>
+<td>97.74%</td>
+<td>0.0317&#x2F;0.9817</td>
+<td>0.0644&#x2F;<strong>0.9645</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td>448</td>
+<td>99.30%</td>
+<td>98.06%</td>
+<td>0.0288&#x2F;0.9872</td>
+<td>0.0650&#x2F;<strong>0.9697</strong></td>
+<td>43</td>
+</tr>
+<tr>
+<td>512</td>
+<td>99.24%</td>
+<td>97.97%</td>
+<td>0.0300&#x2F;0.9863</td>
+<td>0.0648&#x2F;<strong>0.9691</strong></td>
+<td>19</td>
+</tr>
+</tbody></table>
+<h3 id="测试二"><a href="#测试二" class="headerlink" title="测试二"></a><strong>测试二</strong></h3><blockquote>
+<p>不同loss测试</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>mIoU</th>
+<th>升降</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BCE pos_weight &#x3D; 1</td>
+<td>best_miou: 0.9659 in :46</td>
+<td>N&#x2F;A</td>
+</tr>
+<tr>
+<td>BCE pos_weight &#x3D; 0.55</td>
+<td>best_miou: 0.9622 in :9</td>
+<td>-0.38%</td>
+</tr>
+<tr>
+<td>focal loss alpha&#x3D;0.5 gamma&#x3D;0.5</td>
+<td>best_miou: 0.9644 in :22</td>
+<td>-0.15%</td>
+</tr>
+<tr>
+<td>BCE&amp;dice</td>
+<td>best_miou: 0.9659 in :16</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>dice</td>
+<td>best_miou: 0.9658 in :11</td>
+<td>-0.01%</td>
+</tr>
+</tbody></table>
+<h3 id="测试三"><a href="#测试三" class="headerlink" title="测试三"></a>测试三</h3><blockquote>
+<p>采用colorjitter、水平翻转 、旋转一定角度进行训练，观察模型分割结果，分析是否存在问题</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>mIoU.img</th>
+<th>mIoU</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BaselineBCE weight 0.75</td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iclshq1vj213x0u0mxz.jpg"></td>
+<td>best_miou: 0.9651 in :26</td>
+</tr>
+<tr>
+<td>水平翻转A.HorizontalFlip(p&#x3D;1)</td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icltpeihj213x0u0js9.jpg"></td>
+<td>best_miou: 0.9643 in :40</td>
+</tr>
+<tr>
+<td>旋转一定角度A.IAAAffine(rotate&#x3D;(-10, 10), p&#x3D;1</td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iclxx5hfj21400u075a.jpg"></td>
+<td>best_miou: 0.9640 in :41</td>
+</tr>
+<tr>
+<td>色彩扰动A.ColorJitter(brightness&#x3D;0.1, contrast&#x3D;0.2, saturation&#x3D;0.2, hue&#x3D;0.2, p&#x3D;1)</td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icm24007j21400u0aaz.jpg"></td>
+<td>best_miou: 0.9630 in :46</td>
+</tr>
+<tr>
+<td>色彩扰动A.ColorJitter(brightness&#x3D;0.2, contrast&#x3D;0.2, saturation&#x3D;0.2, hue&#x3D;0.2, p&#x3D;1)</td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2icm5vgmjj213z0u0dgs.jpg"></td>
+<td>best_miou: 0.9627 in :48</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE/" rel="tag"># 分割项目</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6CamVid%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/" rel="prev" title="「分割项目」（二）基于自动驾驶CamVid数据集的分割任务">
+                  <i class="fa fa-chevron-left"></i> 「分割项目」（二）基于自动驾驶CamVid数据集的分割任务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" rel="next" title="「深度学习基础」神经网络中的归一化">
+                  「深度学习基础」神经网络中的归一化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陨石kk</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+--!>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

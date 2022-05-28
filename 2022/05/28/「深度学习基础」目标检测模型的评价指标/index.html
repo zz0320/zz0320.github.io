@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="写在前面对于一个目标检测模型的好坏，总的来说可以从以下三个方面来评估：  分类的精度如何？一般可以用准确度（Accuracy），精度（Precision），召回率（Recall Rate）， PR 曲线，AP，mAP等 定位的精度如何？比如 IoU 运行的速度如何。比如 fps，一秒处理几张图  严格说某些场合也会很在意模型的大小，这也是一个研究方向，比如 squeeze net, mobile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「深度学习基础」目标检测模型的评价指标">
+<meta property="og:url" content="https://username.github.io/2022/05/28/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/index.html">
+<meta property="og:site_name" content="陨石kk的博客">
+<meta property="og:description" content="写在前面对于一个目标检测模型的好坏，总的来说可以从以下三个方面来评估：  分类的精度如何？一般可以用准确度（Accuracy），精度（Precision），召回率（Recall Rate）， PR 曲线，AP，mAP等 定位的精度如何？比如 IoU 运行的速度如何。比如 fps，一秒处理几张图  严格说某些场合也会很在意模型的大小，这也是一个研究方向，比如 squeeze net, mobile">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o9i2jwhyj209104ct8n.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o95bwe1wj20ld0f3js3.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o9kethglj20tn0cj0uf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2oacb97wij20sr0c340k.jpg">
+<meta property="article:published_time" content="2022-05-28T07:25:27.000Z">
+<meta property="article:modified_time" content="2022-05-28T10:24:45.072Z">
+<meta property="article:author" content="陨石kk">
+<meta property="article:tag" content="深度学习基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o9i2jwhyj209104ct8n.jpg">
+
+
+<link rel="canonical" href="https://username.github.io/2022/05/28/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/28/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/","path":"2022/05/28/「深度学习基础」目标检测模型的评价指标/","title":"「深度学习基础」目标检测模型的评价指标"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>「深度学习基础」目标检测模型的评价指标 | 陨石kk的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">陨石kk的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6%E3%80%8CAcc%E3%80%8D"><span class="nav-number">3.</span> <span class="nav-text">准确度「Acc」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E7%8E%87%E3%80%8CPrecision%E3%80%8D"><span class="nav-number">4.</span> <span class="nav-text">精确率「Precision」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AC%E5%9B%9E%E7%8E%87%E3%80%8CRecall%E3%80%8D"><span class="nav-number">5.</span> <span class="nav-text">召回率「Recall」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoU%E3%80%8CIntersection-over-Union%E3%80%8D"><span class="nav-number">6.</span> <span class="nav-text">IoU「Intersection over Union」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AP%E3%80%8CAverage-Precision%E3%80%8D"><span class="nav-number">7.</span> <span class="nav-text">AP「Average Precision」</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mAP"><span class="nav-number">7.1.</span> <span class="nav-text">mAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VOC-mAP"><span class="nav-number">7.2.</span> <span class="nav-text">VOC mAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#COCO-mAP"><span class="nav-number">7.3.</span> <span class="nav-text">COCO mAP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="陨石kk"
+      src="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">陨石kk</p>
+  <div class="site-description" itemprop="description">无限进步</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zz0320" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zz0320" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zyc160378629@gmail.com" title="E-Mail → mailto:zyc160378629@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/28/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="「深度学习基础」目标检测模型的评价指标 | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「深度学习基础」目标检测模型的评价指标
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-28 15:25:27 / 修改时间：18:24:45" itemprop="dateCreated datePublished" datetime="2022-05-28T15:25:27+08:00">2022-05-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>对于一个目标检测模型的好坏，总的来说可以从以下三个方面来评估：</p>
+<ul>
+<li>分类的精度如何？一般可以用准确度（Accuracy），精度（Precision），召回率（Recall Rate）， PR 曲线，AP，mAP等</li>
+<li>定位的精度如何？比如 IoU</li>
+<li>运行的速度如何。比如 fps，一秒处理几张图</li>
+</ul>
+<p>严格说某些场合也会很在意模型的大小，这也是一个研究方向，比如 squeeze net, mobile net, shuffle net 等。所以除了上面三个维度，模型的大小也可以是一个评价维度</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>由于有些指标是统计指标，所以先回顾一下相关的统计学知识</p>
+<span id="more"></span>
+
+<p>在做假设检验的时候会犯两种错误</p>
+<ul>
+<li>第一，<strong>原假设</strong>是<strong>正确</strong>的，而判断它为<strong>错误</strong>的「FP」</li>
+<li>第二，<strong>原假设</strong>是<strong>错误</strong>的，而判断它为<strong>正确</strong>的「FN」</li>
+</ul>
+<p>这个问题如果放到混淆矩阵里面就更清楚了</p>
+<table>
+<thead>
+<tr>
+<th>真实值（label）\ 预测值</th>
+<th>正例</th>
+<th>负例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正例</td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr>
+<td>负例</td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody></table>
+<p>分别可以解释为</p>
+<ul>
+<li>第一，将<strong>正样本</strong>「Positive」预测为<strong>负</strong>「False」：「FP」</li>
+<li>第二，将<strong>负样本</strong>「Negative」预测为<strong>正</strong>「True」：「TN」</li>
+</ul>
+<h2 id="准确度「Acc」"><a href="#准确度「Acc」" class="headerlink" title="准确度「Acc」"></a>准确度「Acc」</h2><p>准确度为：<strong>所有预测中预测正确的比例</strong><br>$$<br>Acc &#x3D; \frac{TP+TN}{TP+FN+FP+TN}<br>$$</p>
+<h2 id="精确率「Precision」"><a href="#精确率「Precision」" class="headerlink" title="精确率「Precision」"></a>精确率「Precision」</h2><p>精确率为：<strong>在所有检测出的目标中检测正确的概率</strong><br>$$<br>Precision &#x3D; \frac{TP}{TP+FP}<br>$$<br>精确率是从<strong>预测的结果</strong>的角度来定义，评价分类器<strong>预测的准确性</strong>。精确率又称为<strong>查准率</strong>。需要注意的是， Precision 和 Accuracy 是不一样的，Accuracy 针对所有样本，而 Precision 仅针对检测出来（包括误检）的那一部分样本。</p>
+<p>更一般地，当Precision为100%的时候，表示<strong>没有误检</strong>。</p>
+<blockquote>
+<p>比如预测有5个正样本，其中有4个是预测正确的，那么precision就是4&#x2F;5&#x3D;0.8</p>
+</blockquote>
+<h2 id="召回率「Recall」"><a href="#召回率「Recall」" class="headerlink" title="召回率「Recall」"></a>召回率「Recall」</h2><p>召回率为：<strong>所有的正样本中正确识别的概率</strong></p>
+<p>$$<br>Recall &#x3D; \frac{TP}{TP+FN}<br>$$<br>召回率是从<strong>样本的角度</strong>出发的，评价分类器<strong>找到所有正样本的能力</strong>。召回率又称<strong>查全率</strong>。</p>
+<p>更一般地，当Recall为100%的时候，表示<strong>没有漏检</strong>。</p>
+<blockquote>
+<p>比如有4个正确预测的正样本，总的正样本数量是8, 那么recall就是4&#x2F;8&#x3D;0.5</p>
+</blockquote>
+<h2 id="IoU「Intersection-over-Union」"><a href="#IoU「Intersection-over-Union」" class="headerlink" title="IoU「Intersection over Union」"></a>IoU「Intersection over Union」</h2><p>交并比（IoU）是度量两个检测框（对于目标检测来说）的交叠程度，公式如下：<br>$$<br>IoU &#x3D; \frac{area(B_p \cap B_{gt})}{area(B_p \cup B_{gt})}<br>$$<br>用图片展示如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o9i2jwhyj209104ct8n.jpg"></p>
+<h2 id="AP「Average-Precision」"><a href="#AP「Average-Precision」" class="headerlink" title="AP「Average Precision」"></a>AP「Average Precision」</h2><p><strong>查准率</strong>和<strong>查全率</strong>是一对矛盾的度量，一般而言，查准率高时，查全率往往偏低；而查全率高时，查准率往往偏低。</p>
+<p>我们从直观理解确实如此：</p>
+<p>​	我们如果希望好瓜尽可能多地选出来，则可以通过增加选瓜的数量来实现，如果将所有瓜都选上了，那么所有好瓜也必然被选上，但是这样查准率就会越低；若希望选出的瓜中好瓜的比例尽可能高，则只选最有把握的瓜，但这样难免会漏掉不少好瓜，导致查全率较低。</p>
+<p>通常只有在一些简单任务中，才可能使查全率和查准率都很高。所以为了更全面的衡量模型的性能提出了 <strong>AP</strong>。<br>在看 AP 之前先来看看 <strong>PR 曲线（Precision Recall Curve）</strong>，即横轴为 <strong>Recall</strong>，竖轴为 <strong>Precision</strong>。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o95bwe1wj20ld0f3js3.jpg"></p>
+<p>而 AP 表示的是检测器在各个 Recall 情况下的平均值，对应的就是 <strong>PR 曲线下的面积（AUC， Area Under Curve）</strong>。</p>
+<p>从离散的角度来说 AP 可以表达如下式：<br>$$<br>AP &#x3D; \frac{\sum P_{r_i}}{\sum r}<br>$$<br>其中，$P_{r_i}$表示PR曲线上$r_i$所对应的P值，而$\sum r &#x3D; 1$。显然，AP是针对某个单一类别的。</p>
+<h3 id="mAP"><a href="#mAP" class="headerlink" title="mAP"></a>mAP</h3><p>AP 是针对单个类别识别器的评价指标「注：COCO中的AP默认类似为VOC中的mAP」，而 mAP 是从类别的维度对 AP 进行平均，因此可以评价<strong>多分类器</strong>和<strong>目标检测器</strong>的性能<br>$$<br>mAP &#x3D; \frac{AP}{num_classes}<br>$$<br>mAP的大小一定在[0,1]区间，越大越好，该指标是目标检测算法中<strong>最重要</strong>的一个。</p>
+<iframe src="//player.bilibili.com/player.html?aid=583749910&bvid=BV1ez4y1X7g2&cid=208782163&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<h3 id="VOC-mAP"><a href="#VOC-mAP" class="headerlink" title="VOC mAP"></a>VOC mAP</h3><p>VOC mAP 是我们常看到的一种 mAP 计算方式。上面说的是理论上的 mAP 的定义，但是在实际计算中，由于 PR 曲线并不是单调递减的，而是抖动的，所以对进行“平滑”操作。由于 VOC 在 2010 年更新了“平滑”的方式，所以这里说的是 2010 之后的计算方式。</p>
+<p>在 <strong>IoU &#x3D; 0.5</strong> 的情况下，针对每一个不同的 <strong>Recall 值（包括0和1）</strong>，选取其大于等于这些 Recall 值时的 <strong>Precision 最大值</strong>，然后计算 PR 曲线下面积作为 AP 值，从而计算 mAP。结合下面表格就更清晰了。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2o9kethglj20tn0cj0uf.jpg"></p>
+<h3 id="COCO-mAP"><a href="#COCO-mAP" class="headerlink" title="COCO mAP"></a>COCO mAP</h3><p>跟 VOC mAP 类似，只是 COCO 数据集会统计不同 IoU 下的 mAP， 比如 0.5, 0.75, 0.95 等，除此之外还提供了不同尺度大小物体检测AP的指标和多种条件下平均召回率的指标，详细可以看「<a target="_blank" rel="noopener" href="https://cocodataset.org/#detection-eval">COCO官网</a>」或者上面的视频。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2oacb97wij20sr0c340k.jpg"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/53405779">参考链接1</a>🔗</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88896868">参考链接2</a>🔗 </p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/53405779/answer/918216701">参考链接3</a>🔗 </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kuweicai/article/details/105082446">参考链接4</a>🔗 </p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1TK4y1o78H/?spm_id_from=trigger_reload">参考链接5</a>🔗</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" rel="tag"># 深度学习基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/27/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%8D%E8%AF%BB%E5%8D%95%E9%98%B6%E6%AE%B5%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%99%A8SSD/" rel="prev" title="「论文系列」（二）重读单阶段目标检测器SSD">
+                  <i class="fa fa-chevron-left"></i> 「论文系列」（二）重读单阶段目标检测器SSD
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陨石kk</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+--!>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

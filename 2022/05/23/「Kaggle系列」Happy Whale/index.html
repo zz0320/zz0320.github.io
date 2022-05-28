@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="竞赛背景我们使用指纹和面部识别来识别人，但我们能对动物使用类似的方法吗？事实上，研究人员通过海洋生物的尾巴、背鳍、头部和其他身体部位的形状和标记来手动追踪它们。 建立一个鲸鱼和海豚图像识别的自动化模型，研究人员可以将两者的识别时间减少99%以上。 更有效的识别可以实现以前负担不起或不可能实现的研究规模 竞赛目的「图像检索」开发一个模型，通过鲸鱼和海豚的天然标记的独特但往往微妙的特征来匹配它们。特别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Kaggle系列」Happy Whale">
+<meta property="og:url" content="https://username.github.io/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/index.html">
+<meta property="og:site_name" content="陨石kk的博客">
+<meta property="og:description" content="竞赛背景我们使用指纹和面部识别来识别人，但我们能对动物使用类似的方法吗？事实上，研究人员通过海洋生物的尾巴、背鳍、头部和其他身体部位的形状和标记来手动追踪它们。 建立一个鲸鱼和海豚图像识别的自动化模型，研究人员可以将两者的识别时间减少99%以上。 更有效的识别可以实现以前负担不起或不可能实现的研究规模 竞赛目的「图像检索」开发一个模型，通过鲸鱼和海豚的天然标记的独特但往往微妙的特征来匹配它们。特别">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2il5sbzndj21810u079k.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2il6i4wkvj21220r8q5x.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2imr9kvvoj220w0u00wj.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2imu016mnj20ox0fqtbe.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in3i8dvdj20an09rwfa.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in77ryvmj20ab089wen.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in7e54jxj20df07l3yo.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inh00neyj20n407pq3o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2injd2bw7j20oe0cf3zp.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inkgpke3j20ta0ae0u5.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inqaq1slj21f80gkdlp.jpg">
+<meta property="article:published_time" content="2022-05-23T07:25:27.000Z">
+<meta property="article:modified_time" content="2022-05-24T03:02:43.459Z">
+<meta property="article:author" content="陨石kk">
+<meta property="article:tag" content="Kaggle系列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h2il5sbzndj21810u079k.jpg">
+
+
+<link rel="canonical" href="https://username.github.io/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://username.github.io/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/","path":"2022/05/23/「Kaggle系列」Happy Whale/","title":"「Kaggle系列」Happy Whale"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>「Kaggle系列」Happy Whale | 陨石kk的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">陨石kk的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-主页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%9E%E8%B5%9B%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">竞赛背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%9E%E8%B5%9B%E7%9B%AE%E7%9A%84%E3%80%8C%E5%9B%BE%E5%83%8F%E6%A3%80%E7%B4%A2%E3%80%8D"><span class="nav-number">2.</span> <span class="nav-text">竞赛目的「图像检索」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%B5%9B%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">比赛数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="nav-number">4.</span> <span class="nav-text">评价指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%A8%8B%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">相关程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arcface-baseline%EF%BC%9A%E9%93%BE%E6%8E%A5%F0%9F%94%97"><span class="nav-number">5.1.</span> <span class="nav-text">Arcface baseline：链接🔗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficientnet-baseline%EF%BC%9A%E9%93%BE%E6%8E%A5%F0%9F%94%97"><span class="nav-number">5.2.</span> <span class="nav-text">Efficientnet baseline：链接🔗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficient-Cosine-Distance%EF%BC%9A%E9%93%BE%E6%8E%A5%F0%9F%94%97"><span class="nav-number">5.3.</span> <span class="nav-text">Efficient + Cosine Distance：链接🔗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cropped-Image%EF%BC%9A%E9%93%BE%E6%8E%A51%F0%9F%94%97-%E9%93%BE%E6%8E%A52%F0%9F%94%97"><span class="nav-number">5.4.</span> <span class="nav-text">Cropped Image：链接1🔗 链接2🔗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E6%B5%81%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">方案流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA"><span class="nav-number">6.1.</span> <span class="nav-text">数据增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E3%80%8C%E6%B7%B7%E5%90%88%E3%80%8D"><span class="nav-number">6.1.1.</span> <span class="nav-text">常见数据增强「混合」</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E7%AB%9E%E8%B5%9B%E6%96%B9%E6%B3%95"><span class="nav-number">6.1.2.</span> <span class="nav-text">本次竞赛方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EfficientNet-EfficientNetV2-L"><span class="nav-number">6.2.</span> <span class="nav-text">EfficientNet | EfficientNetV2-L</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Focal-Loss"><span class="nav-number">6.3.</span> <span class="nav-text">Focal Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArcFace"><span class="nav-number">6.4.</span> <span class="nav-text">ArcFace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GeM-Pooling"><span class="nav-number">6.5.</span> <span class="nav-text">GeM Pooling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95"><span class="nav-number">6.6.</span> <span class="nav-text">模型融合方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Voting"><span class="nav-number">6.6.1.</span> <span class="nav-text">Voting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bagging"><span class="nav-number">6.6.2.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Boosting"><span class="nav-number">6.6.3.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Blending"><span class="nav-number">6.6.4.</span> <span class="nav-text">Blending</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88"><span class="nav-number">6.6.5.</span> <span class="nav-text">模型融合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.7.</span> <span class="nav-text">代码实践</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="陨石kk"
+      src="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">陨石kk</p>
+  <div class="site-description" itemprop="description">无限进步</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zz0320" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zz0320" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zyc160378629@gmail.com" title="E-Mail → mailto:zyc160378629@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="「Kaggle系列」Happy Whale | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「Kaggle系列」Happy Whale
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-24 11:02:43" itemprop="dateModified" datetime="2022-05-24T11:02:43+08:00">2022-05-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="竞赛背景"><a href="#竞赛背景" class="headerlink" title="竞赛背景"></a>竞赛背景</h2><p>我们使用指纹和面部识别来识别人，但我们能对动物使用类似的方法吗？事实上，研究人员通过海洋生物的尾巴、背鳍、头部和其他身体部位的形状和标记来手动追踪它们。</p>
+<p>建立一个鲸鱼和海豚图像识别的自动化模型，研究人员可以将两者的识别时间减少99%以上。 更有效的识别可以实现以前负担不起或不可能实现的研究规模</p>
+<h2 id="竞赛目的「图像检索」"><a href="#竞赛目的「图像检索」" class="headerlink" title="竞赛目的「图像检索」"></a>竞赛目的「图像检索」</h2><p>开发一个模型，通过鲸鱼和海豚的天然标记的独特但往往微妙的特征来匹配它们。特别关注由28个研究机构建立的多物种数据集中的背鳍和身体侧视图。最好的作品将提出快速和准确的照片识别解决方案。</p>
+<h2 id="比赛数据"><a href="#比赛数据" class="headerlink" title="比赛数据"></a>比赛数据</h2><p>本次竞赛的数据包含了从28个不同研究机构收集的30个不同物种的15000多个独特的海洋哺乳动物个体的图像。</p>
+<p>海洋研究人员已经对个体进行了人工识别并赋予了<strong>individual_id</strong>，而任务是在图像中正确识别这些个体。</p>
+<span id="more"></span>
+
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2il5sbzndj21810u079k.jpg"></p>
+<table>
+<thead>
+<tr>
+<th align="center">训练集</th>
+<th align="center">测试集</th>
+<th align="center">总数据集</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">51033张</td>
+<td align="center">约28000张图片</td>
+<td align="center">约62GB</td>
+</tr>
+</tbody></table>
+<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2il6i4wkvj21220r8q5x.jpg" style="zoom:50%;" />
+
+<table>
+<thead>
+<tr>
+<th align="center">image</th>
+<th align="center">species</th>
+<th align="center">individual_id「预测值」</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">图片ID</td>
+<td align="center">物种</td>
+<td align="center">个体ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>测试数据中有些个体在训练数据中没有观察到，这些个体应该被预测为新个体</p>
+</blockquote>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>本次竞赛的评估采用了常见的 MAP@5<br>$$<br>MAP@5 &#x3D; \frac{1}{U}\sum_{u&#x3D;1}^{U}\sum_{k&#x3D;1}^min(n,5)P(k)\times rel(k)<br>$$<br>其中</p>
+<ul>
+<li>$U$是图像的数量</li>
+<li>$P(k)$是预测为$k$图片的精度</li>
+<li>$n$是每个图像的预测数量</li>
+<li>$rel(k)$是一个指标函数，如果$k$图片是正确标签，则等于1，否则等于0</li>
+</ul>
+<p>简单来说可以用下面的表格展示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">真实类别A，预测类别</th>
+<th align="center">得分</th>
+<th align="center">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A, B, C, D, E</td>
+<td align="center">1&#x2F;1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">B, A, C, D, E</td>
+<td align="center">0&#x2F;1+1&#x2F;2</td>
+<td align="center">0.5</td>
+</tr>
+<tr>
+<td align="center">B, C, A, D, E</td>
+<td align="center">0&#x2F;1+0&#x2F;2+1&#x2F;3</td>
+<td align="center">0.3333</td>
+</tr>
+<tr>
+<td align="center">B, C, D, A, E</td>
+<td align="center">0&#x2F;1+0&#x2F;2+0&#x2F;3+1&#x2F;4</td>
+<td align="center">0.25</td>
+</tr>
+<tr>
+<td align="center">B, C, D, E, A</td>
+<td align="center">0&#x2F;1+0&#x2F;2+0&#x2F;3+0&#x2F;4+1&#x2F;5</td>
+<td align="center">0.2</td>
+</tr>
+<tr>
+<td align="center">B, C, D, E, F</td>
+<td align="center">0&#x2F;1+0&#x2F;2+0&#x2F;3+0&#x2F;4+0&#x2F;5</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p>对于测试集中的每张图片， 最多可以预测 5个individual_id 标签。测试集中有一些个体在训练数据中没有出现，这些个体应该被预测为new_individual</p>
+<p>提交结果文件应包含标题并具有以下格式</p>
+<table>
+<thead>
+<tr>
+<th>image</th>
+<th>predictions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>000188a72f2562.jpg</td>
+<td>37c7aba965a5 114207cab555 a6e325d8e924 19fbb960f07d new_individual</td>
+</tr>
+<tr>
+<td>000ba09273d6f3.jpg</td>
+<td>37c7aba965a5 114207cab555 a6e325d8e924 19fbb960f07d new_individual</td>
+</tr>
+</tbody></table>
+<h2 id="相关程序"><a href="#相关程序" class="headerlink" title="相关程序"></a>相关程序</h2><h3 id="Arcface-baseline：链接🔗"><a href="#Arcface-baseline：链接🔗" class="headerlink" title="Arcface baseline：链接🔗"></a>Arcface baseline：<a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ks2019/happywhale-arcface-baseline-tpu">链接</a>🔗</h3><h3 id="Efficientnet-baseline：链接🔗"><a href="#Efficientnet-baseline：链接🔗" class="headerlink" title="Efficientnet baseline：链接🔗"></a>Efficientnet baseline：<a target="_blank" rel="noopener" href="https://www.kaggle.com/code/aikhmelnytskyy/happywhale-arcface-baseline-eff-net-kfold5-0-652">链接</a>🔗</h3><h3 id="Efficient-Cosine-Distance：链接🔗"><a href="#Efficient-Cosine-Distance：链接🔗" class="headerlink" title="Efficient + Cosine Distance：链接🔗"></a>Efficient + Cosine Distance：<a target="_blank" rel="noopener" href="https://www.kaggle.com/code/andradaolteanu/whales-dolphins-effnet-embedding-cos-distance">链接</a>🔗</h3><h3 id="Cropped-Image：链接1🔗-链接2🔗"><a href="#Cropped-Image：链接1🔗-链接2🔗" class="headerlink" title="Cropped Image：链接1🔗 链接2🔗"></a>Cropped Image：<a target="_blank" rel="noopener" href="https://www.kaggle.com/code/awsaf49/happywhale-cropped-dataset-yolov5">链接1</a>🔗 <a target="_blank" rel="noopener" href="https://www.kaggle.com/code/awsaf49/happywhale-boundingbox-yolov5">链接2</a>🔗</h3><h2 id="方案流程"><a href="#方案流程" class="headerlink" title="方案流程"></a>方案流程</h2><h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p>本次竞赛属于细粒度分类，所以每个ID都至少较少的图片数量，通过数据增强则可以增加每个ID的图片数量，从而达到防止过拟合的效果。</p>
+<h4 id="常见数据增强「混合」"><a href="#常见数据增强「混合」" class="headerlink" title="常见数据增强「混合」"></a>常见数据增强「混合」</h4><p>几何变换：翻转，旋转，裁剪，变形，缩放等各类操作</p>
+<p>颜色变换类：常见的包括噪声、模糊、颜色变换、擦除、填充等等</p>
+<h4 id="本次竞赛方法"><a href="#本次竞赛方法" class="headerlink" title="本次竞赛方法"></a>本次竞赛方法</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/sahamed/eda-visualization-augmentation">链接</a></p>
+</blockquote>
+<ul>
+<li><p>RandomResizedCrop 随机裁剪后固定尺寸</p>
+</li>
+<li><p>VerticalFlip 图片垂直翻转 </p>
+</li>
+<li><p>HorizontalFlip 图片水平翻转 </p>
+</li>
+<li><p>RandomBrightnessContrast 随机亮度、对比度、明度调整 </p>
+</li>
+<li><p>GaussianBlur 高斯模糊 </p>
+</li>
+<li><p>Normalize 归一化 让RGB三色的数值分布接近，可以使得训练更稳定</p>
+</li>
+</ul>
+<h3 id="EfficientNet-EfficientNetV2-L"><a href="#EfficientNet-EfficientNetV2-L" class="headerlink" title="EfficientNet | EfficientNetV2-L"></a>EfficientNet | EfficientNetV2-L</h3><p>EfficientNet使用了compound scaling方法，统一缩放网络深度、宽度和分辨率</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2imr9kvvoj220w0u00wj.jpg"></p>
+<blockquote>
+<p>(a)为baseline网络，(b)、(c)、(d)为单独通过增加width，depth以及resolution使得网络变大的方式，(e)为compound scaling的方式。</p>
+</blockquote>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2imu016mnj20ox0fqtbe.jpg"></p>
+<p>文中给出了EfficientNet-B0的基准框架，在EfficientNet当中，我们所使用的激活函数是swish激活函数，整个网络分为了9个stage，在第2到第8个stage是一直在堆叠MBConv结构，表格当中MBConv结构后面的数字（1或6）表示的就是MBConv中第一个1x1的卷积层会将输入特征矩阵的channels扩充为n倍。Channels表示通过该Stage后输出特征矩阵的Channels。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.00298">「EfficientNetV2论文」</a> <a target="_blank" rel="noopener" href="https://github.com/d-li14/efficientnetv2.pytorch">「代码」</a></p>
+<h3 id="Focal-Loss"><a href="#Focal-Loss" class="headerlink" title="Focal Loss"></a>Focal Loss</h3><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in3i8dvdj20an09rwfa.jpg"></p>
+<p>在多分类问题中，类别平衡的数据集的目标标签是均匀分布的。若某类目标的样本相比其他类在数量上占据极大优势，则可以将该数据集视为不平衡的数据集。</p>
+<p>这种不平衡将导致两个问题∶</p>
+<ul>
+<li><p>训练效率低下，因为大多数样本都是简单的目标，这些样本在训练中提供给模型不太有用的信息;</p>
+</li>
+<li><p>简单的样本数量上的极大优势会搞垮训练，使模型性能退化。</p>
+</li>
+</ul>
+<p>一种常见的解决方案是执行某种形式的困难样本挖掘， 实现方式就是在训练时选取困难样本或使用更复杂的采样，以及重新对样本加权等方案。</p>
+<p>对具体图像分类问题，对数据增强技术方案变更，以便为样本不足的类创建增强的数据。</p>
+<p>焦点损失函数（Focal loss）旨在通过降低内部加权（简单样本）来解决类别不平衡问题，这样即使简单样本的数量很大，但它们对总损失的贡献却很小。也就是说， 该函数侧重于用困难样本稀疏的数据集来训练。</p>
+<p>作者提出focal loss的出发点也是希望one-stage detector可以达到two-stage detector的准确率，同时不影响原有的速度。</p>
+<p><strong>数据集</strong> </p>
+<p>这个数据及具有极端的类不平衡问题，它包含总共6354407个正常样本和8213个欺诈案例，两者比例约为733：1，显然是非平衡问题</p>
+<p><strong>使用基准模型</strong></p>
+<p>绘制了混淆矩阵来展示模型在测试集上的分类性能。你可以看到总共有1140 + 480 &#x3D; 1620 个样本被错误分类</p>
+<p>本次比赛中，由于数据分布不均匀，Focal loss的效果往往比CrossEntropy loss的效果要好「<a target="_blank" rel="noopener" href="https://www.kaggle.com/code/zeta1996/pytorch-lightning-arcface-focal-loss">链接</a>」</p>
+<h3 id="ArcFace"><a href="#ArcFace" class="headerlink" title="ArcFace"></a>ArcFace</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.07698">链接</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in77ryvmj20ab089wen.jpg"></th>
+<th><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2in7e54jxj20df07l3yo.jpg"></th>
+</tr>
+</thead>
+</table>
+<h3 id="GeM-Pooling"><a href="#GeM-Pooling" class="headerlink" title="GeM Pooling"></a>GeM Pooling</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.02512.pdf">GeM Pooling论文</a></p>
+</blockquote>
+<p>介绍GeM Pooling之前，先要介绍一下Average Pooling 和 Max Pooling 。 </p>
+<p>一般来说，当Feature Map中的所有信息都应该有所贡献的时候用Average Pooling ，例如图像分割中常用Global Average Pooling来获取全局上下文关系，再例如224*224图像分类将最后的7*7map进行Average Pooling，是因为网络深层的高级语义信息一般来说都能帮助分类器分类。 </p>
+<p>反之，为了减少无用信息的影响时用Max Pooling ，比如网络浅层常常见到Max Pooling ，因为开始几层对图像而言包含较多的无关信息。 </p>
+<p>另外Average Pooling与Max Pooling输出值会有不同的幅度区间，有些时候会遇到Max Pooling输出值幅度波动大，此时可以加一些归一化操作。二者的具体使用场景只有在具体任务上观察，实际效果炼丹后才知道。</p>
+<p>Generalized Mean Pooling (GeM Pooling)，出现在很多大规模图像检索和识别有关的比赛或者论文中。尝尝使用GeM pooling对backbone最后一层特征进行池化。</p>
+<p>GeM Pooling可以看作Average Pooling和Max Pooling的延申，当p&#x3D;1时，GeM Pooling退化成Average Pooling，当p无穷大时，GeM pooling 等效于Max Pooling. </p>
+<p>池化参数p可以手动设置或学习，因为这个操作是可微分的，可以成为反向传播的一部分。 </p>
+<p>因此，GeM Pooling层是可训练的。人们既可以固定超参数p，也可以使用反向传播来训练 它，作为标准模型训练过程的一部分</p>
+<h3 id="模型融合方法"><a href="#模型融合方法" class="headerlink" title="模型融合方法"></a>模型融合方法</h3><h4 id="Voting"><a href="#Voting" class="headerlink" title="Voting"></a>Voting</h4><p>假如对于一个二分类模型，有3个基础模型，那么就采取投票的方式，投票多者为最终的分类</p>
+<h4 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h4><p>Bagging的思想是利用抽样生成不同的训练集，进而训练不同的模型，将这些模型的输出结果综合（投票或平均的方式）得到最终的结果。 「类似Dropout」</p>
+<p>Bagging本质上是利用了模型的多样性，改善算法整体的效果。Bagging的重点在于不同训练集的生成，这里使用了一种名为Bootstrap的方法，即有放回的重复随机抽样，从而生成不同的数据集。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inh00neyj20n407pq3o.jpg"></p>
+<h4 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h4><p>Boosting是一种提升算法，其思想是在算法迭代过程中，每次迭代构建新的分类器，重点关注被之前分类器分类错误的样本，如此迭代，最终加权平均所有分类器的结果，从而提升分类精度。 </p>
+<p>Boosting与Bagging相比来说最大的区别就是Boosting是串行的，而Bagging中所有的分类器是可以同时生成的（分类器之间无关系），而Boosting中则必须先生成第一个分类器，然后依次往后进行。核心思想是通过改变训练集进行有针对性的学习，通过每次更新迭代，增加错误样本的权重，减小正确样本的权重。知错就改， </p>
+<p>逐渐变好。典型应用为：Adaboost、GBDT和Xgboost。流程图如下所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2injd2bw7j20oe0cf3zp.jpg"></p>
+<h4 id="Blending"><a href="#Blending" class="headerlink" title="Blending"></a>Blending</h4><p>类似概率voting </p>
+<p>用不相交的数据训练不同的Base Model，将它们的输出（概率值）取加权平均。 </p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inkgpke3j20ta0ae0u5.jpg"></p>
+<h4 id="模型融合"><a href="#模型融合" class="headerlink" title="模型融合"></a>模型融合</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2inqaq1slj21f80gkdlp.jpg"></p>
+<p>交叉验证部分：首先将训练数据分为 5 份，接下来一共 5 个迭代，每次迭代时，将 4 份数据作为 Training Set 对每个 Base Model 进行训练，然后在剩下一份 Hold-out Set上进行预测。同时也要将其在测试数据上的预测保存下来，对测试数据的全部做出预测。（test预测矩阵1） </p>
+<blockquote>
+<p>5个迭代都完成以后我们就获得了一个 训练数据行数 x Base Model 数量 的矩阵，这个矩阵接下来作为第二层的Model的训练数 据，训练完以后，对test data做预测。（test预测矩阵2） </p>
+</blockquote>
+<p>这时我们得到了两个预测矩阵，平均后就得到最后的输出</p>
+<h3 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h3>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kaggle%E7%B3%BB%E5%88%97/" rel="tag"># Kaggle系列</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" rel="prev" title="「深度学习基础」神经网络中的归一化">
+                  <i class="fa fa-chevron-left"></i> 「深度学习基础」神经网络中的归一化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" rel="next" title="「深度学习基础」语义分割损失函数">
+                  「深度学习基础」语义分割损失函数 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陨石kk</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+--!>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
