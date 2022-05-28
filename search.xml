@@ -80,6 +80,25 @@
     
     
     <entry>
+      <title>「小脚本」（一）目标检测数据标签可视化</title>
+      <link href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+      <url>/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<h2 id="可视化COCO"><a href="#可视化COCO" class="headerlink" title="可视化COCO"></a>可视化COCO</h2><h2 id="可视化VOC"><a href="#可视化VOC" class="headerlink" title="可视化VOC"></a>可视化VOC</h2><h2 id="可视化YOLO"><a href="#可视化YOLO" class="headerlink" title="可视化YOLO"></a>可视化YOLO</h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 小脚本 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>「深度学习基础」神经网络中的归一化</title>
       <link href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/"/>
       <url>/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/</url>
@@ -129,6 +148,25 @@
         <tags>
             
             <tag> 分割项目 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>「常用工具」持续更新常用工具和网站</title>
+      <link href="/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/"/>
+      <url>/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/</url>
+      
+        <content type="html"><![CDATA[<ul><li>matplotlib操作指南🧭「<a href="https://matplotlib.org/3.5.0/gallery/misc/rasterization_demo.html#sphx-glr-gallery-misc-rasterization-demo-py">链接</a>」</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 常用工具 </tag>
             
         </tags>
       
@@ -338,25 +376,6 @@
         <tags>
             
             <tag> 花朵分类项目 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>「环境配置」使用Conda配置mmdetction环境</title>
-      <link href="/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-      <url>/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8Dmmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-      
-        <content type="html"><![CDATA[<p>参考文章「<a href="https://mmdetection.readthedocs.io/zh_CN/v2.22.0/get_started.html#id2"><strong>mmdet文档</strong></a>」「<a href="https://pytorch.org/get-started/locally/"><strong>Pytorch官网</strong></a>」</p><h2 id="Conda激活环境"><a href="#Conda激活环境" class="headerlink" title="Conda激活环境"></a>Conda激活环境</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n py39_torch112 python=3.9</span><br><span class="line">conda activate py39_torch112  </span><br></pre></td></tr></table></figure><h2 id="使用pip-下载Pytorch"><a href="#使用pip-下载Pytorch" class="headerlink" title="使用pip 下载Pytorch"></a>使用pip 下载Pytorch</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu</span><br><span class="line">pip3 install torch torchvision torchaudio</span><br></pre></td></tr></table></figure><span id="more"></span><h2 id="安装mmcv-full-x3D-x3D-1-4-5"><a href="#安装mmcv-full-x3D-x3D-1-4-5" class="headerlink" title="安装mmcv-full &#x3D;&#x3D; 1.4.5"></a>安装mmcv-full &#x3D;&#x3D; 1.4.5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.4.5</span><br></pre></td></tr></table></figure><h2 id="Conda-安装onnx和onnxruntime"><a href="#Conda-安装onnx和onnxruntime" class="headerlink" title="Conda 安装onnx和onnxruntime"></a>Conda 安装onnx和onnxruntime</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install onnx onnxruntime</span><br></pre></td></tr></table></figure><h2 id="安装依赖环境库"><a href="#安装依赖环境库" class="headerlink" title="安装依赖环境库"></a>安装依赖环境库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure><h2 id="之后-python-setup-py-develp"><a href="#之后-python-setup-py-develp" class="headerlink" title="之后 python setup.py develp"></a>之后 python setup.py develp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py develop</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 环境配置 </tag>
             
         </tags>
       
