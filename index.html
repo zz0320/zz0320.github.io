@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -205,6 +205,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/27/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%8D%E8%AF%BB%E5%8D%95%E9%98%B6%E6%AE%B5%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%99%A8SSD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/27/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%8D%E8%AF%BB%E5%8D%95%E9%98%B6%E6%AE%B5%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%99%A8SSD/" class="post-title-link" itemprop="url">「论文系列」（二）重读单阶段目标检测器SSD</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-27 23:07:00" itemprop="dateCreated datePublished" datetime="2022-05-27T23:07:00+08:00">2022-05-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-28 15:30:27" itemprop="dateModified" datetime="2022-05-28T15:30:27+08:00">2022-05-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p>论文作者呈现了一种仅需要单个深度神经网络的目标检测算法「端到端」；设计其在不同尺寸的特征图下进行预测以处理不同尺度大小的物体；摒弃了之前那种双阶段目标检测器需要生成$Region\  Proposal$和特征再筛选的过程；基于$Nvidia\  Titan\  X$上，针对大小为300*300大小的输入，在VOC2007数据集上测试的$mAP$为$74.3%$，速度为$59FPS$，对于512*512的输入$mAP$为$76.9%$的$mAP$</p>
+<blockquote>
+<p>原文链接「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.02325">点击这里</a>」</p>
+</blockquote>
+<h2 id="设计理念"><a href="#设计理念" class="headerlink" title="设计理念"></a>设计理念</h2><h3 id="采用多尺度特征图（不同大小Feature-Map）"><a href="#采用多尺度特征图（不同大小Feature-Map）" class="headerlink" title="采用多尺度特征图（不同大小Feature Map）"></a>采用多尺度特征图（不同大小Feature Map）</h3><p>用大特征图来检测小目标，小特征图来检测大目标「类似FPN」</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2nejiu54jj20s009yac7.jpg"></p>
+<h3 id="采用卷积与NMS进行检测（不使用全连接，提速）"><a href="#采用卷积与NMS进行检测（不使用全连接，提速）" class="headerlink" title="采用卷积与NMS进行检测（不使用全连接，提速）"></a>采用卷积与NMS进行检测（不使用全连接，提速）</h3><p>SSD直接采用卷积对不同的特征图来进行提取检测结果，直接使用卷积输出作为边框回归「定位」和类别预测「分类」</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2nekjhfr4j20f70a93yz.jpg"></p>
+<p>假设某个用于预测的$Feature\  Map$是$Feature\  Map$是5*5*256，$Anchor\ Box$数量为$3$，共生成5*5*3&#x3D;75个锚框</p>
+<p>最后输出中，用于分类的是5*5*63，定位的是5*5*12</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/27/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%8D%E8%AF%BB%E5%8D%95%E9%98%B6%E6%AE%B5%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%99%A8SSD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -300,90 +392,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" class="post-title-link" itemprop="url">「深度学习基础」神经网络中的归一化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-24 18:32:26" itemprop="dateModified" datetime="2022-05-24T18:32:26+08:00">2022-05-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将详细介绍神经网络中常见的五种归一化「包含Weight Norm」</p>
-<iframe src="//player.bilibili.com/player.html?aid=595391170&bvid=BV1Pq4y1a7pH&cid=569272749&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -441,6 +449,90 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/23/%E3%80%8CKaggle%E7%B3%BB%E5%88%97%E3%80%8DHappy%20Whale/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" class="post-title-link" itemprop="url">「深度学习基础」神经网络中的归一化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-24 18:32:26" itemprop="dateModified" datetime="2022-05-24T18:32:26+08:00">2022-05-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文将详细介绍神经网络中常见的五种归一化「包含Weight Norm」</p>
+<iframe src="//player.bilibili.com/player.html?aid=595391170&bvid=BV1Pq4y1a7pH&cid=569272749&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -954,92 +1046,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">「环境配置」（二）在云服务器上配置mmtracking环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-05-22 00:00:00 / 修改时间：02:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T00:00:00+08:00">2022-05-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考文章「<a target="_blank" rel="noopener" href="https://mmtracking.readthedocs.io/zh_CN/latest/"><strong>mmtrack文档</strong></a>」</p>
-<h3 id="在恒源云下-新建Pytorch1-11-CUDA-1-10-0的环境"><a href="#在恒源云下-新建Pytorch1-11-CUDA-1-10-0的环境" class="headerlink" title="在恒源云下 新建Pytorch1.11 CUDA 1.10.0的环境"></a>在恒源云下 新建Pytorch1.11 CUDA 1.10.0的环境</h3><h3 id="安装VOT数据集测试评估库"><a href="#安装VOT数据集测试评估库" class="headerlink" title="安装VOT数据集测试评估库"></a>安装VOT数据集测试评估库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install git+https://github.com/votchallenge/toolkit.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装mmcv-full"><a href="#安装mmcv-full" class="headerlink" title="安装mmcv-full"></a>安装mmcv-full</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.5.0 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10.0/index.html</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装mmdet"><a href="#安装mmdet" class="headerlink" title="安装mmdet"></a>安装mmdet</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmdet</span><br></pre></td></tr></table></figure>
-
-<h3 id="将mmtracking克隆到本地"><a href="#将mmtracking克隆到本地" class="headerlink" title="将mmtracking克隆到本地"></a>将mmtracking克隆到本地</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/open-mmlab/mmtracking.git</span><br><span class="line">cd mmtracking</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装必备依赖"><a href="#安装必备依赖" class="headerlink" title="安装必备依赖"></a>安装必备依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install setuptools==58.2.0 # 这步非常重要 新版本不再支持easy_install </span><br><span class="line">pip install -v -e .  # or &quot;python setup.py develop&quot;</span><br><span class="line">sudo apt-get install libglib2.0-0</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEmmtracking%E7%8E%AF%E5%A2%83/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
