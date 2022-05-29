@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="背景介绍今天早晨起来看到了「机器之心」和「量子位」的公众号推文「PyTorch宣布支持苹果M1芯片GPU加速：训练快6倍，推理提升21倍」「炼丹速度×7！你的Mac电脑也能在PyTorch训练中用GPU加速了」 我的天 过年了过年了  Pytorch支持Apple Silion啦！！！  看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！ 环境配置先根据Pytorch的官方指引用">
 <meta property="og:type" content="article">
@@ -279,39 +279,41 @@
 <p>看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！</p>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>先根据Pytorch的<a target="_blank" rel="noopener" href="https://pytorch.org/blog/introducing-accelerated-pytorch-training-on-mac/">官方指引</a>用Conda创建一个原生Python环境「M1系列Python3.9以上才是原生」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n torch112_py39 python=3.9</span><br><span class="line">conda activate torch112_py39</span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
+
 <p>之后进入环境 安装torch</p>
 <blockquote>
 <p>这里需要注意 conda下面找不到torchaudio 需要在pip下面安装</p>
 <p>安装结束后为了防止pip的环境与conda的环境冲突 删掉pip下面的torch</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision -c pytorch-nightly</span><br><span class="line">pip install torchaudio</span><br><span class="line">pip uninstall torch</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>再安装一个依赖库「可能有用😂」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
+
 <p>OK 环境配置好了 找个项目来试一试</p>
 <h2 id="项目实测"><a href="#项目实测" class="headerlink" title="项目实测"></a>项目实测</h2><p>正好手头有目标检测CenterNet的项目代码 跑跑看看有没有提升</p>
 <p>在Pycharm里面将编译环境改成设置好的<strong>torch112_py39</strong>环境</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg"></p>
 <p>之后安装项目依赖库</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install matplotlib</span><br><span class="line">pip install torchsummary</span><br></pre></td></tr></table></figure>
+
 <p>最后运行看看结果</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>Torch1.9.0｜Python3.8</th>
-<th>Torch1.10.2 \</th>
-<th>Python3.9</th>
+<th>Torch1.10.2 | Python3.9</th>
 <th>Torch1.9.0</th>
 <th>Python3.9</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg" alt=""></td>
+<tbody><tr>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg"></td>
 </tr>
 <tr>
 <td>1.43FPS</td>
@@ -319,11 +321,9 @@
 <td>4.29FPS</td>
 <td>5.85FPS</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <blockquote>
-<p>Torch针对MBP的GPU代码为’mps’ 需要将model和data都移到device = torch.device(‘mps’)上</p>
+<p>Torch针对MBP的GPU代码为’mps’ 需要将model和data都移到device &#x3D; torch.device(‘mps’)上</p>
 </blockquote>
 <p>平台为MacBook M1 Pro 16+512 8核CPU 14核GPU</p>
 <p>最后来看效果确实是有提升，考虑到目标检测过程中非torch操作很多且只能在CPU上跑这个项目，这种提升效果还是不错的，后续考虑再测试一下Train阶段的提升效果</p>
@@ -390,17 +390,17 @@
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/comments.js"></script><script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/utils.js"></script><script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/motion.js"></script><script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/schemes/muse.js"></script><script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
 <script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/third-party/search/local-search.js"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 
-  <script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/third-party/fancybox.js"></script>
+  <script src="/js/third-party/fancybox.js"></script>
 
-  <script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/third-party/pace.js"></script>
+  <script src="/js/third-party/pace.js"></script>
 
   
 
@@ -410,7 +410,7 @@
   
 
   <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
-<script src="https://unpkg.com/hexo-theme-next@8.11.1/source/js/third-party/math/mathjax.js"></script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 
