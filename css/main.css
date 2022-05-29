@@ -501,7 +501,7 @@ pre figcaption a:hover {
 }
 pre,
 code {
-  font-family: Courier New, consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
+  font-family: Courier New, consolas, Menlo, monospace, Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 code {
   border-radius: 3px;
@@ -2889,7 +2889,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #d6ff2d;
+  background: #363eff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
