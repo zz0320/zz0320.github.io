@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
@@ -279,41 +279,39 @@
 <p>看了看推文 有Preview版本可以使用了 这还不折腾起来？ 开整！</p>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>先根据Pytorch的<a target="_blank" rel="noopener" href="https://pytorch.org/blog/introducing-accelerated-pytorch-training-on-mac/">官方指引</a>用Conda创建一个原生Python环境「M1系列Python3.9以上才是原生」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n torch112_py39 python=3.9</span><br><span class="line">conda activate torch112_py39</span><br></pre></td></tr></table></figure>
-
 <span id="more"></span>
-
 <p>之后进入环境 安装torch</p>
 <blockquote>
 <p>这里需要注意 conda下面找不到torchaudio 需要在pip下面安装</p>
 <p>安装结束后为了防止pip的环境与conda的环境冲突 删掉pip下面的torch</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision -c pytorch-nightly</span><br><span class="line">pip install torchaudio</span><br><span class="line">pip uninstall torch</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>再安装一个依赖库「可能有用😂」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
-
 <p>OK 环境配置好了 找个项目来试一试</p>
 <h2 id="项目实测"><a href="#项目实测" class="headerlink" title="项目实测"></a>项目实测</h2><p>正好手头有目标检测CenterNet的项目代码 跑跑看看有没有提升</p>
 <p>在Pycharm里面将编译环境改成设置好的<strong>torch112_py39</strong>环境</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dpqbqiihj20ya08uq3l.jpg" alt=""></p>
 <p>之后安装项目依赖库</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install matplotlib</span><br><span class="line">pip install torchsummary</span><br></pre></td></tr></table></figure>
-
 <p>最后运行看看结果</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>Torch1.9.0｜Python3.8</th>
-<th>Torch1.10.2 | Python3.9</th>
+<th>Torch1.10.2 \</th>
+<th>Python3.9</th>
 <th>Torch1.9.0</th>
 <th>Python3.9</th>
 </tr>
 </thead>
-<tbody><tr>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg"></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg"></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg"></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg"></td>
+<tbody>
+<tr>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqf6zkndj21fz0u078d.jpg" alt=""></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqhrgzalj21fz0u0aeb.jpg" alt=""></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dvnjaakxj21fz0u078s.jpg" alt=""></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2dqgzjxb4j21fz0u078n.jpg" alt=""></td>
 </tr>
 <tr>
 <td>1.43FPS</td>
@@ -321,9 +319,11 @@
 <td>4.29FPS</td>
 <td>5.85FPS</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <blockquote>
-<p>Torch针对MBP的GPU代码为’mps’ 需要将model和data都移到device &#x3D; torch.device(‘mps’)上</p>
+<p>Torch针对MBP的GPU代码为’mps’ 需要将model和data都移到device = torch.device(‘mps’)上</p>
 </blockquote>
 <p>平台为MacBook M1 Pro 16+512 8核CPU 14核GPU</p>
 <p>最后来看效果确实是有提升，考虑到目标检测过程中非torch操作很多且只能在CPU上跑这个项目，这种提升效果还是不错的，后续考虑再测试一下Train阶段的提升效果</p>
