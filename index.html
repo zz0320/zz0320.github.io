@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-28 15:25:27 / 修改时间：18:35:55" itemprop="dateCreated datePublished" datetime="2022-05-28T15:25:27+08:00">2022-05-28</time>
+      <time title="创建时间：2022-05-28 15:25:27 / 修改时间：18:26:44" itemprop="dateCreated datePublished" datetime="2022-05-28T15:25:27+08:00">2022-05-28</time>
     </span>
 
   
@@ -711,7 +711,7 @@ mjx-container[display="true"] + br {
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-28 18:51:29" itemprop="dateModified" datetime="2022-05-28T18:51:29+08:00">2022-05-28</time>
+      <time title="修改时间：2022-05-29 22:08:45" itemprop="dateModified" datetime="2022-05-29T22:08:45+08:00">2022-05-29</time>
     </span>
 
   
@@ -724,7 +724,15 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="可视化COCO"><a href="#可视化COCO" class="headerlink" title="可视化COCO"></a>可视化COCO</h2><h2 id="可视化VOC"><a href="#可视化VOC" class="headerlink" title="可视化VOC"></a>可视化VOC</h2><h2 id="可视化YOLO"><a href="#可视化YOLO" class="headerlink" title="可视化YOLO"></a>可视化YOLO</h2>
+          <h2 id="可视化COCO"><a href="#可视化COCO" class="headerlink" title="可视化COCO"></a>可视化COCO</h2><h3 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"># @file name  : coco_bbox_visualize.py</span></span><br><span class="line"><span class="string"># @author     : zz0320</span></span><br><span class="line"><span class="string"># @date       : 2022-05-28</span></span><br><span class="line"><span class="string"># @brief      : coco bbox标签可视化</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> pycocotools.coco <span class="keyword">import</span> COCO</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageDraw</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">json_path = <span class="string">"/Users/kenton/Downloads/集群重点研发/蝠鲼数据集/jpg/处理结果集合/VOCdevkit/VOC2007_COCO/annotations/test2017.json"</span></span><br><span class="line">img_path = <span class="string">"/Users/kenton/Downloads/集群重点研发/蝠鲼数据集/jpg/处理结果集合/VOCdevkit/VOC2007_COCO/images/"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load coco data</span></span><br><span class="line">coco = COCO(annotation_file=json_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get all image index info</span></span><br><span class="line">ids = <span class="built_in">list</span>(<span class="built_in">sorted</span>(coco.imgs.keys()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"number of images: {}"</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(ids)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># get all coco class labels</span></span><br><span class="line">coco_classes = <span class="built_in">dict</span>([(v[<span class="string">"id"</span>], v[<span class="string">"name"</span>]) <span class="keyword">for</span> k, v <span class="keyword">in</span> coco.cats.items()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历前三张图像</span></span><br><span class="line"><span class="keyword">for</span> img_id <span class="keyword">in</span> ids[:<span class="number">3</span>]:</span><br><span class="line">    <span class="comment"># 获取对应图像id的所有annotations idx信息</span></span><br><span class="line">    ann_ids = coco.getAnnIds(imgIds=img_id)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据annotations idx信息获取所有标注信息</span></span><br><span class="line">    targets = coco.loadAnns(ann_ids)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get image file name</span></span><br><span class="line">    path = coco.loadImgs(img_id)[<span class="number">0</span>][<span class="string">'file_name'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># read image</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(os.path.join(img_path, path)).convert(<span class="string">'RGB'</span>)</span><br><span class="line">    draw = ImageDraw.Draw(img)</span><br><span class="line">    <span class="comment"># draw box to image</span></span><br><span class="line">    <span class="keyword">for</span> target <span class="keyword">in</span> targets:</span><br><span class="line">        x, y, w, h = target[<span class="string">"bbox"</span>]</span><br><span class="line">        x1, y1, x2, y2 = x, y, <span class="built_in">int</span>(x + w), <span class="built_in">int</span>(y + h)</span><br><span class="line">        draw.rectangle((x1, y1, x2, y2))</span><br><span class="line">        draw.text((x1, y1), coco_classes[target[<span class="string">"category_id"</span>]])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># show image</span></span><br><span class="line">    plt.imshow(img)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -922,84 +930,6 @@ mjx-container[display="true"] + br {
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/" class="post-title-link" itemprop="url">「常用工具」持续更新常用工具和网站</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-22 16:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T16:00:00+08:00">2022-05-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-28 20:24:08" itemprop="dateModified" datetime="2022-05-28T20:24:08+08:00">2022-05-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li>matplotlib操作指南🧭「<a target="_blank" rel="noopener" href="https://matplotlib.org/3.5.0/gallery/misc/rasterization_demo.html#sphx-glr-gallery-misc-rasterization-demo-py">链接</a>」</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E5%88%86%E5%89%B2%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6CamVid%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%86%E5%89%B2%E4%BB%BB%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1059,6 +989,85 @@ mjx-container[display="true"] + br {
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/22/%E3%80%8C%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%8D%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E7%BD%91%E7%AB%99/" class="post-title-link" itemprop="url">「常用工具」持续更新常用工具和网站</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 16:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T16:00:00+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-29 22:05:47" itemprop="dateModified" datetime="2022-05-29T22:05:47+08:00">2022-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li>matplotlib操作指南🧭「<a target="_blank" rel="noopener" href="https://matplotlib.org/3.5.0/gallery/misc/rasterization_demo.html#sphx-glr-gallery-misc-rasterization-demo-py">链接</a>」</li>
+<li>fiftyone数据集可视化👀「<a target="_blank" rel="noopener" href="https://github.com/voxel51/fiftyone">链接</a>」</li>
+</ul>
+
       
     </div>
 
