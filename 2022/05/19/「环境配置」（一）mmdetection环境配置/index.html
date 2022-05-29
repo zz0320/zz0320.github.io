@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.cat.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CCourier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
@@ -24,12 +24,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"username.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="参考文章「mmdet文档」「Pytorch官网」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112   使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url https:&#x2F;&#x2F;d">
+    <meta name="description" content="参考文章「mmdet文档」「Pytorch官网」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112    使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url https:&#x2F;&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「环境配置」（一）使用Conda配置mmdetction环境">
 <meta property="og:url" content="https://username.github.io/2022/05/19/%E3%80%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89mmdetection%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="陨石kk的博客">
-<meta property="og:description" content="参考文章「mmdet文档」「Pytorch官网」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112   使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url https:&#x2F;&#x2F;d">
+<meta property="og:description" content="参考文章「mmdet文档」「Pytorch官网」 Conda激活环境12conda create -n py39_torch112 python&#x3D;3.9conda activate py39_torch112    使用pip 下载Pytorch123pip3 install --pre torch torchvision torchaudio --extra-index-url https:&#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-19T10:02:00.000Z">
 <meta property="article:modified_time" content="2022-05-22T14:14:58.045Z">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E6%BF%80%E6%B4%BB%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">Conda激活环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8pip-%E4%B8%8B%E8%BD%BDPytorch"><span class="nav-number">2.</span> <span class="nav-text">使用pip 下载Pytorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmcv-full-1-4-5"><span class="nav-number">3.</span> <span class="nav-text">安装mmcv-full &#x3D;&#x3D; 1.4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda-%E5%AE%89%E8%A3%85onnx%E5%92%8Connxruntime"><span class="nav-number">4.</span> <span class="nav-text">Conda 安装onnx和onnxruntime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">安装依赖环境库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8B%E5%90%8E-python-setup-py-develp"><span class="nav-number">6.</span> <span class="nav-text">之后 python setup.py develp</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E6%BF%80%E6%B4%BB%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">Conda激活环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8pip-%E4%B8%8B%E8%BD%BDPytorch"><span class="nav-number">2.</span> <span class="nav-text">使用pip 下载Pytorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmcv-full-x3D-x3D-1-4-5"><span class="nav-number">3.</span> <span class="nav-text">安装mmcv-full &#x3D;&#x3D; 1.4.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda-%E5%AE%89%E8%A3%85onnx%E5%92%8Connxruntime"><span class="nav-number">4.</span> <span class="nav-text">Conda 安装onnx和onnxruntime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">安装依赖环境库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8B%E5%90%8E-python-setup-py-develp"><span class="nav-number">6.</span> <span class="nav-text">之后 python setup.py develp</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -270,12 +270,19 @@
     <div class="post-body" itemprop="articleBody">
         <p>参考文章「<a target="_blank" rel="noopener" href="https://mmdetection.readthedocs.io/zh_CN/v2.22.0/get_started.html#id2"><strong>mmdet文档</strong></a>」「<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/"><strong>Pytorch官网</strong></a>」</p>
 <h2 id="Conda激活环境"><a href="#Conda激活环境" class="headerlink" title="Conda激活环境"></a>Conda激活环境</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n py39_torch112 python=3.9</span><br><span class="line">conda activate py39_torch112  </span><br></pre></td></tr></table></figure>
+
 <h2 id="使用pip-下载Pytorch"><a href="#使用pip-下载Pytorch" class="headerlink" title="使用pip 下载Pytorch"></a>使用pip 下载Pytorch</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu</span><br><span class="line"></span><br><span class="line">pip3 install torch torchvision torchaudio</span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
-<h2 id="安装mmcv-full-1-4-5"><a href="#安装mmcv-full-1-4-5" class="headerlink" title="安装mmcv-full == 1.4.5"></a>安装mmcv-full == 1.4.5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.4.5</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装mmcv-full-x3D-x3D-1-4-5"><a href="#安装mmcv-full-x3D-x3D-1-4-5" class="headerlink" title="安装mmcv-full &#x3D;&#x3D; 1.4.5"></a>安装mmcv-full &#x3D;&#x3D; 1.4.5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv-full==1.4.5</span><br></pre></td></tr></table></figure>
+
 <h2 id="Conda-安装onnx和onnxruntime"><a href="#Conda-安装onnx和onnxruntime" class="headerlink" title="Conda 安装onnx和onnxruntime"></a>Conda 安装onnx和onnxruntime</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install onnx onnxruntime</span><br></pre></td></tr></table></figure>
+
 <h2 id="安装依赖环境库"><a href="#安装依赖环境库" class="headerlink" title="安装依赖环境库"></a>安装依赖环境库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
 <h2 id="之后-python-setup-py-develp"><a href="#之后-python-setup-py-develp" class="headerlink" title="之后 python setup.py develp"></a>之后 python setup.py develp</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py develop</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
