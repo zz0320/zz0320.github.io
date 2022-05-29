@@ -215,6 +215,7 @@ template {
 }
 html,
 body {
+  font-family: "Linux Biolinum", "Noto Serif SC", serif;
   height: 100%;
 }
 body {
@@ -2889,7 +2890,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #f5d1ff;
+  background: #05ffe8;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2915,5 +2916,3 @@ hr {
 .sub-menu .menu-item {
   display: inline-block;
 }
-@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700
-&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap");
