@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -205,6 +205,328 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">「花朵分类项目」（三）卷积神经网络模型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 19:46:20" itemprop="dateCreated datePublished" datetime="2022-05-19T19:46:20+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-23 22:59:23" itemprop="dateModified" datetime="2022-05-23T22:59:23+08:00">2022-05-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="VGG-ResNet-SENet介绍"><a href="#VGG-ResNet-SENet介绍" class="headerlink" title="VGG ResNet SENet介绍"></a>VGG ResNet SENet介绍</h2><h3 id="VGG-「原文链接」"><a href="#VGG-「原文链接」" class="headerlink" title="VGG 「原文链接」"></a>VGG 「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">原文链接</a>」</h3><p><img src="https://pic3.zhimg.com/v2-dfe4eaaa4450e2b58b38c5fe82f918c0_1440w.jpg?source=172ae18b"></p>
+<p>在VGG中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5*5卷积核，这样做的主要目的是在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
+<h3 id="ResNet「原文链接」"><a href="#ResNet「原文链接」" class="headerlink" title="ResNet「原文链接」"></a>ResNet「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">原文链接</a>」</h3><p><img src="https://pic4.zhimg.com/80/v2-252e6d9979a2a91c2d3033b9b73eb69f_720w.jpg"></p>
+<p>残差网络依旧让非线形层满足$H’(x,w_h)$，然后从输入直接引入一个短连接到非线形层的输出上，使得整个映射变为<br>$$<br>H(x) &#x3D; F(x) + x \Leftrightarrow  H’(x,w_h) + x<br>$$<br>$Shortcut-mapping$有利于<strong>梯度传播</strong>，梯度可以更有效的从后往前传播，同样可以有效的解决网络层数增加会导致的网络退化问题「至少不会变的更坏」，如果恒等映射已经是最优解，那么残差模块只需要拟合零映射。<br>$$<br>\frac{\partial H}{\partial x} &#x3D; \frac{\partial F}{\partial x} + \frac{\partial x}{\partial x} &#x3D; \frac{\partial F}{\partial x} + 1<br>$$</p>
+<h3 id="SENet「原文链接」"><a href="#SENet「原文链接」" class="headerlink" title="SENet「原文链接」"></a>SENet「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">原文链接</a>」</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65459972">参考链接</a>🔗</p>
+</blockquote>
+<p>对于卷积操作，很大一部分工作是提高<strong>感受野</strong>，即空间上融合更多特征融合，或者是提取多尺度空间信息，如Inception网络的多分支结构。对于channel维度的特征融合，卷积操作基本上默认对输入特征图的所有channel进行融合。而MobileNet网络中的组卷积（Group Convolution）和深度可分离卷积（Depthwise Separable Convolution）对channel进行分组也主要是为了使模型更加轻量级，减少计算量。而SENet网络的创新点在于<strong>关注channel之间的关系</strong>，希望模型可以自动学习到<strong>不同channel特征的重要程度</strong>。为此，SENet提出了<strong>Squeeze-and-Excitation (SE)模块</strong>，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2iqetersyj20ru07rt98.jpg"></p>
+<p>SE模块首先对卷积得到的特征图进行<strong>Squeeze</strong>操作，得到channel级的全局特征，然后对全局特征进行<strong>Excitation</strong>操作，学习各个channel间的关系，也<strong>得到不同channel的权重</strong>，最后乘以原来的特征图得到最终特征。</p>
+<p>本质上，SE模块是在<strong>channel维度</strong>上做<strong>attention</strong>操作，这种注意力机制让模型可以更加关注信息量最大的channel特征，而抑制那些不重要的channel特征。另外一点是SE模块是通用的，这意味着其可以嵌入到现有的网络架构中。</p>
+<h2 id="输入尺寸的选择"><a href="#输入尺寸的选择" class="headerlink" title="输入尺寸的选择"></a>输入尺寸的选择</h2><h3 id="方法一：让数据适应模型"><a href="#方法一：让数据适应模型" class="headerlink" title="方法一：让数据适应模型"></a>方法一：让数据适应模型</h3><p>直接将图像缩放&#x2F;裁剪到模型要求的输入尺寸，常见的尺寸如基于ImageNet设计的如224*224系列、基于Cifar设计的32*32系列</p>
+<h3 id="方法二：修改模型适应参数"><a href="#方法二：修改模型适应参数" class="headerlink" title="方法二：修改模型适应参数"></a>方法二：修改模型适应参数</h3><p>修改分辨率下降的地方，以改变模型对输入尺寸的要求删除一个Pooling，使224*224变为可接收112*112增加一个Pooling，使224*224变为可接收448*448卷积步长stride&#x3D;2的，改为stide&#x3D;1，使输入可变为112*112卷积步长stride&#x3D;1的，改为stide&#x3D;2，使输入可变为448*448自行设计卷积核大小，stride，池化层数量</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%8A%9F%E8%83%BD%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%8A%9F%E8%83%BD%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">「花朵分类项目」（二）功能函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 19:45:20" itemprop="dateCreated datePublished" datetime="2022-05-19T19:45:20+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-22 12:41:55" itemprop="dateModified" datetime="2022-05-22T12:41:55+08:00">2022-05-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="模型训练指标"><a href="#模型训练指标" class="headerlink" title="模型训练指标"></a>模型训练指标</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正确率(Accuracy)</td>
+<td>衡量模型在整个数据集上分类正确的比例</td>
+</tr>
+<tr>
+<td>召回率(Recall)</td>
+<td>该类样本中，召回（找回）出了多少</td>
+</tr>
+<tr>
+<td>精确度(Precision)</td>
+<td>判别为该类的样本中，正确的有多少</td>
+</tr>
+<tr>
+<td>混淆矩阵(Confusion Matrix)</td>
+<td>混淆矩阵的<strong>行</strong>表示真实类别，<strong>列</strong>表示预测类别</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>「混淆矩阵」</th>
+<th>猫「预测类别」</th>
+<th>狗「预测类别」</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>猫「真实类别」</strong></td>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>狗「真实类别」</strong></td>
+<td>10</td>
+<td>20</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>召回率</th>
+<th>精确度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>猫「7&#x2F;(7+3)&#x3D;70%」狗「20&#x2F;(10+20)&#x3D;66.7%」</td>
+<td>猫「7&#x2F;(7+10)&#x3D;41.17%」狗「20&#x2F;(3+20)&#x3D;86.96%」</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%8A%9F%E8%83%BD%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6%E4%B8%8EFlower102%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6%E4%B8%8EFlower102%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">「花朵分类项目」（一）代码框架与Flower102数据集介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 19:40:20" itemprop="dateCreated datePublished" datetime="2022-05-19T19:40:20+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-22 22:14:53" itemprop="dateModified" datetime="2022-05-22T22:14:53+08:00">2022-05-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><h3 id="模型训练代码框架"><a href="#模型训练代码框架" class="headerlink" title="模型训练代码框架"></a>模型训练代码框架</h3><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2ev6kbvcqj20jw0lb3zz.jpg" style="zoom: 50%;" />
+
+<h3 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h3><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2evasitcfj20vg0u0go9.jpg" style="zoom: 33%;" />
+
+<h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2evkpc7e0j219f0mf771.jpg" style="zoom: 33%;" />
+
+<h2 id="Flower102数据集介绍"><a href="#Flower102数据集介绍" class="headerlink" title="Flower102数据集介绍"></a>Flower102数据集介绍</h2><p>共有102类花朵，每个类别数量40到258不等 「<a target="_blank" rel="noopener" href="https://www.robots.ox.ac.uk/~vgg/data/flowers/102/"><strong>下载地址</strong></a>」</p>
+<p>下载「<strong>Dataset图片</strong>」和「<strong>图像标签文件</strong>」</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/19/%E3%80%8C%E8%8A%B1%E6%9C%B5%E5%88%86%E7%B1%BB%E9%A1%B9%E7%9B%AE%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6%E4%B8%8EFlower102%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -423,7 +745,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-29 23:41:14" itemprop="dateModified" datetime="2022-05-29T23:41:14+08:00">2022-05-29</time>
+      <time title="修改时间：2022-05-22 22:15:08" itemprop="dateModified" datetime="2022-05-22T22:15:08+08:00">2022-05-22</time>
     </span>
 
   
@@ -438,6 +760,10 @@
     <div class="post-body" itemprop="articleBody">
           <h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p>CVPR2022论文     <strong>《基于自适应相关级联递归网络的实用双目匹配》</strong>ttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2203.11483</p>
 <p>原文链接：「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.11483">Practical Stereo Matching via Cascaded Recurrent Network with Adaptive Correlation</a>」</p>
+<p>作者解读视频：</p>
+<iframe src="//player.bilibili.com/player.html?aid=383885340&bvid=BV1oZ4y1h7mL&cid=717464018&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<h2 id="运行准备"><a href="#运行准备" class="headerlink" title="运行准备"></a>运行准备</h2><p>在<strong>恒源云</strong>平台 配置一个<strong>CUDA10.1</strong>的环境 这里选择<strong>Tesla T4</strong> 「使用其他型号可能无法只能进行CUDA11及以上的配置」</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/11/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%B7%E8%A7%86%E7%A7%91%E6%8A%80CVPR2022%E3%80%90CREStereo%E3%80%91%E5%AE%98%E6%96%B9GitHub%E4%BB%A3%E7%A0%81%E6%8E%A8%E7%90%86%E8%BF%90%E8%A1%8C/#more" rel="contents">
