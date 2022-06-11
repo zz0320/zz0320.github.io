@@ -274,7 +274,7 @@ mjx-container[display="true"] + br {
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -317,6 +317,97 @@ mjx-container[display="true"] + br {
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/" class="post-title-link" itemprop="url">「目标追踪系列」（一）初识目标追踪</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-22 00:00:00 / 修改时间：12:43:42" itemprop="dateCreated datePublished" datetime="2022-05-22T00:00:00+08:00">2022-05-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="什么是目标追踪"><a href="#什么是目标追踪" class="headerlink" title="什么是目标追踪"></a>什么是目标追踪</h2><blockquote>
+<p>转自知乎「<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/148516834">链接</a>」「<a target="_blank" rel="noopener" href="https://kns.cnki.net/KCMS/detail/11.2109.TP.20190104.1506.016.html?uid=WEEvREcwSlJHSldRa1FhdXNXaEd1OFVOaDdwQ0tCckFuaHBIcFFIbUxkbz0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&v=MDU3Nzk0WXc5TXptUm42ajU3VDNmbHFXTTBDTEw3UjdxZWJ1WnNGaUhrVzd6QkpGWT1LQ0xmWWJHNEg5ak1ybzlHWk90">论文原文</a>」</p>
+</blockquote>
+<p>目标追踪是计算机视觉领域的一个重要问题，目前广泛应用在体育赛事转播、安防监控和无人机、无人车、机器人等领域。下面是一些应用的例子</p>
+<p><img src="https://pic1.zhimg.com/80/v2-531de42fb6687921041aa8a8e6cd2ce8_720w.jpg" alt="田径比赛"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-9b8f472d7c98a1a91b4b93d0d8886b36_720w.jpg" alt="足球比赛"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-deee3ca02a16a4ac0d098acb2390cfac_720w.jpg" alt="车辆追踪"></p>
+<h2 id="目标追踪任务分类"><a href="#目标追踪任务分类" class="headerlink" title="目标追踪任务分类"></a>目标追踪任务分类</h2><h3 id="从目标追踪的用途出发，目标追踪可以分为以下几种任务"><a href="#从目标追踪的用途出发，目标追踪可以分为以下几种任务" class="headerlink" title="从目标追踪的用途出发，目标追踪可以分为以下几种任务"></a>从目标追踪的用途出发，目标追踪可以分为以下几种任务</h3><p><strong>单目标追踪</strong> - 给定一个目标，追踪这个目标的位置。</p>
+<p><strong>多目标追踪</strong> - 追踪多个目标的位置</p>
+<p><strong>Person Re-ID</strong> - 行人重识别，是利用计算机视觉技术判断图像或者视频序列中是否存在特定行人的技术。广泛被认为是一个图像检索的子问题。给定一个监控行人图像，检索跨设备下的该行人图像。旨在弥补固定的摄像头的视觉局限，并可与行人检测&#x2F;行人追踪技术相结合。</p>
+<p><strong>MTMCT</strong> - 多目标多摄像头追踪（Multi-target Multi-camera Tracking），追踪多个摄像头拍摄的多个人</p>
+<p><strong>姿态追踪</strong> - 追踪人的姿态</p>
+<h3 id="按照任务计算类型又可以分为以下2类"><a href="#按照任务计算类型又可以分为以下2类" class="headerlink" title="按照任务计算类型又可以分为以下2类"></a>按照任务计算类型又可以分为以下2类</h3><p><strong>在线追踪</strong> - 在线追踪需要实时处理任务，通过过去和现在帧来追踪未来帧中物体的位置。</p>
+<p><strong>离线追踪</strong> - 离线追踪是离线处理任务，可以通过过去、现在和未来的帧来推断物体的位置，因此准确率会在线追踪高。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%9D%E8%AF%86%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
