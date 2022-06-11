@@ -176,7 +176,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%92%8C2D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">3D目标检测和2D目标检测的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84pipline%E3%80%8Clidar-%E5%8D%95%E5%BC%A0-%E5%8F%8C%E7%9B%AE-%E4%B8%8D%E5%90%8C%E6%83%85%E5%86%B5%E3%80%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">不同的pipline「lidar&#x2F;单张&#x2F;双目&#x2F;不同情况」的解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lidar-Based"><span class="nav-number">2.1.</span> <span class="nav-text">Lidar Based</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E5%89%8D%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.1.</span> <span class="nav-text">先前工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Voxel-based%E3%80%8C%E4%BD%93%E7%B4%A0%E6%96%B9%E6%B3%95%E3%80%8D"><span class="nav-number">2.1.2.</span> <span class="nav-text">Voxel-based「体素方法」</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Point-Based"><span class="nav-number">2.1.3.</span> <span class="nav-text">Point-Based</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hybrid-methods"><span class="nav-number">2.1.4.</span> <span class="nav-text">Hybrid methods</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="nav-number">2.2.</span> <span class="nav-text">单张图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E7%9B%AE"><span class="nav-number">2.3.</span> <span class="nav-text">双目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A7%86%E8%A7%92"><span class="nav-number">2.4.</span> <span class="nav-text">多视角</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95"><span class="nav-number">3.</span> <span class="nav-text">当前存在的问题与未来发展</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%92%8C2D%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">3D目标检测和2D目标检测的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84pipline%E3%80%8Clidar-x2F-%E5%8D%95%E5%BC%A0-x2F-%E5%8F%8C%E7%9B%AE-x2F-%E4%B8%8D%E5%90%8C%E6%83%85%E5%86%B5%E3%80%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">不同的pipline「lidar&#x2F;单张&#x2F;双目&#x2F;不同情况」的解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lidar-Based"><span class="nav-number">2.1.</span> <span class="nav-text">Lidar Based</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E5%89%8D%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.1.</span> <span class="nav-text">先前工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Voxel-based%E3%80%8C%E4%BD%93%E7%B4%A0%E6%96%B9%E6%B3%95%E3%80%8D"><span class="nav-number">2.1.2.</span> <span class="nav-text">Voxel-based「体素方法」</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Point-Based"><span class="nav-number">2.1.3.</span> <span class="nav-text">Point-Based</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hybrid-methods"><span class="nav-number">2.1.4.</span> <span class="nav-text">Hybrid methods</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="nav-number">2.2.</span> <span class="nav-text">单张图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E7%9B%AE"><span class="nav-number">2.3.</span> <span class="nav-text">双目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A7%86%E8%A7%92"><span class="nav-number">2.4.</span> <span class="nav-text">多视角</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95"><span class="nav-number">3.</span> <span class="nav-text">当前存在的问题与未来发展</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -297,45 +297,46 @@
 <li>Further Discussion「当前存在的问题与未来发展」</li>
 </ul>
 <span id="more"></span>
-<h2 id="3D目标检测和2D目标检测的区别"><a href="#3D目标检测和2D目标检测的区别" class="headerlink" title="3D目标检测和2D目标检测的区别"></a>3D目标检测和2D目标检测的区别</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fsxhsxgj20yl0jmjto.jpg" alt=""></p>
+
+<h2 id="3D目标检测和2D目标检测的区别"><a href="#3D目标检测和2D目标检测的区别" class="headerlink" title="3D目标检测和2D目标检测的区别"></a>3D目标检测和2D目标检测的区别</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fsxhsxgj20yl0jmjto.jpg"></p>
 <p><strong>输入数据不一样</strong></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ft7z2wuj20vk0d4jsv.jpg" alt=""></p>
-<p><strong>自动驾驶场景下 通常是7个自由度 「中心点/长宽高/旋转」旋转转化成欧拉角 是3个</strong></p>
-<p><strong>评估方案有不一样 IoU 3D判断mAP/中心点判断方法</strong></p>
-<h2 id="不同的pipline「lidar-单张-双目-不同情况」的解决思路"><a href="#不同的pipline「lidar-单张-双目-不同情况」的解决思路" class="headerlink" title="不同的pipline「lidar/单张/双目/不同情况」的解决思路"></a>不同的pipline「lidar/单张/双目/不同情况」的解决思路</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fsz1snfj20xx0edgnn.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftbd6p4j20zf0d4jti.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftckex1j20qy0er3zk.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftfvwfxj20wn0erdhl.jpg" alt=""></p>
-<h3 id="Lidar-Based"><a href="#Lidar-Based" class="headerlink" title="Lidar Based"></a>Lidar Based</h3><h4 id="先前工作"><a href="#先前工作" class="headerlink" title="先前工作"></a>先前工作</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftivc2gj20x00femze.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ft7z2wuj20vk0d4jsv.jpg"></p>
+<p><strong>自动驾驶场景下 通常是7个自由度 「中心点&#x2F;长宽高&#x2F;旋转」旋转转化成欧拉角 是3个</strong></p>
+<p><strong>评估方案有不一样 IoU 3D判断mAP&#x2F;中心点判断方法</strong></p>
+<h2 id="不同的pipline「lidar-x2F-单张-x2F-双目-x2F-不同情况」的解决思路"><a href="#不同的pipline「lidar-x2F-单张-x2F-双目-x2F-不同情况」的解决思路" class="headerlink" title="不同的pipline「lidar&#x2F;单张&#x2F;双目&#x2F;不同情况」的解决思路"></a>不同的pipline「lidar&#x2F;单张&#x2F;双目&#x2F;不同情况」的解决思路</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fsz1snfj20xx0edgnn.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftbd6p4j20zf0d4jti.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftckex1j20qy0er3zk.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftfvwfxj20wn0erdhl.jpg"></p>
+<h3 id="Lidar-Based"><a href="#Lidar-Based" class="headerlink" title="Lidar Based"></a>Lidar Based</h3><h4 id="先前工作"><a href="#先前工作" class="headerlink" title="先前工作"></a>先前工作</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftivc2gj20x00femze.jpg"></p>
 <p>每个点用一个Shared MLP 抽Feature，最后在这每个点上面做一个Max Pooling，提取出每个点的最大Featrue，用来做分类或者是Concat到之前的输入中做Seg；后期工作有集中在某个区域内，进行feature提取</p>
-<h4 id="Voxel-based「体素方法」"><a href="#Voxel-based「体素方法」" class="headerlink" title="Voxel-based「体素方法」"></a>Voxel-based「体素方法」</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftjjzwrj20s80f5mz3.jpg" alt=""></p>
+<h4 id="Voxel-based「体素方法」"><a href="#Voxel-based「体素方法」" class="headerlink" title="Voxel-based「体素方法」"></a>Voxel-based「体素方法」</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftjjzwrj20s80f5mz3.jpg"></p>
 <p>将Voxel转换成Pillar，从而转换到鸟瞰图上进行2D目标检测</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftmenw1j20wh0e6mz1.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftkuaiuj20us0d3q4o.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftmenw1j20wh0e6mz1.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34ftkuaiuj20us0d3q4o.jpg"></p>
 <p>近处用比较小的Voxel，远处用比较大的Voxel</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu52fxoj20s90dijst.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu52fxoj20s90dijst.jpg"></p>
 <h4 id="Point-Based"><a href="#Point-Based" class="headerlink" title="Point-Based"></a>Point-Based</h4><p>使用一个Encoder-Decoder架构，将点的特征进行抽取</p>
 <p>直接从点出发，得到3D框</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu64s2vj20rf0dl0uy.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu64s2vj20rf0dl0uy.jpg"></p>
 <p>室内场景下，该方法比较合适，先Votes -&gt; Clusters -&gt; Bbox</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu80xi9j20u40djdhr.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu80xi9j20u40djdhr.jpg"></p>
 <h4 id="Hybrid-methods"><a href="#Hybrid-methods" class="headerlink" title="Hybrid methods"></a>Hybrid methods</h4><p>前期用Voxel方法，生成一些Proposal，之后再使用Point进行Refine</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu9e7quj20t50di40c.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fu9e7quj20t50di40c.jpg"></p>
 <h3 id="单张图片"><a href="#单张图片" class="headerlink" title="单张图片"></a>单张图片</h3><p>单张图片，生成3D框，最大的问题是因为没有深度信息</p>
 <p>这里的这种方法是，通过一个Sub-network进行深度信息预测，之后叠加到Conv得到的网络信息中，之后进行3D的预测</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fueze82j20tl0f8dhn.jpg" alt=""></p>
-<p>直接预测深度信息/类似2D的检测</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fuhauh5j20t40dwabv.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fueze82j20tl0f8dhn.jpg"></p>
+<p>直接预测深度信息&#x2F;类似2D的检测</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fuhauh5j20t40dwabv.jpg"></p>
 <p>单张图中又可能有隐藏的几何先验信息，用几何关系去解一些depth信息</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fujm5euj20tc0dgwg3.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34funcdt3j20tj0d0dhe.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fuoekgkj20rc0dejt6.jpg" alt=""></p>
-<h3 id="双目"><a href="#双目" class="headerlink" title="双目"></a>双目</h3><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvcp9j7j20un0faq4j.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fujm5euj20tc0dgwg3.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34funcdt3j20tj0d0dhe.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fuoekgkj20rc0dejt6.jpg"></p>
+<h3 id="双目"><a href="#双目" class="headerlink" title="双目"></a>双目</h3><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvcp9j7j20un0faq4j.jpg"></p>
 <p>可以将两个图的信息进行匹配，得到基于BEV的方法</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvfv77qj20x00e1go9.jpg" alt=""></p>
-<h3 id="多视角"><a href="#多视角" class="headerlink" title="多视角"></a>多视角</h3><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvjrqexj20uj0ehdhg.jpg" alt=""></p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvn1ro8j20vv0dbgnd.jpg" alt=""></p>
-<h2 id="当前存在的问题与未来发展"><a href="#当前存在的问题与未来发展" class="headerlink" title="当前存在的问题与未来发展"></a>当前存在的问题与未来发展</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvq7tgmj20sq0ga40n.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvfv77qj20x00e1go9.jpg"></p>
+<h3 id="多视角"><a href="#多视角" class="headerlink" title="多视角"></a>多视角</h3><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvjrqexj20uj0ehdhg.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvn1ro8j20vv0dbgnd.jpg"></p>
+<h2 id="当前存在的问题与未来发展"><a href="#当前存在的问题与未来发展" class="headerlink" title="当前存在的问题与未来发展"></a>当前存在的问题与未来发展</h2><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h34fvq7tgmj20sq0ga40n.jpg"></p>
 <p>室外场景为主，室内场景相对少一些，但是存在很明显的Gap</p>
 <p>多模态数据存在时序和aug问题</p>
 
