@@ -274,13 +274,13 @@ mjx-container[display="true"] + br {
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -317,6 +317,90 @@ mjx-container[display="true"] + br {
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/" class="post-title-link" itemprop="url">「小脚本」（一）目标检测数据标签可视化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-29 22:08:45" itemprop="dateModified" datetime="2022-05-29T22:08:45+08:00">2022-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="可视化COCO"><a href="#可视化COCO" class="headerlink" title="可视化COCO"></a>可视化COCO</h2><h3 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"># @file name  : coco_bbox_visualize.py</span></span><br><span class="line"><span class="string"># @author     : zz0320</span></span><br><span class="line"><span class="string"># @date       : 2022-05-28</span></span><br><span class="line"><span class="string"># @brief      : coco bbox标签可视化</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> pycocotools.coco <span class="keyword">import</span> COCO</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageDraw</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">json_path = <span class="string">"/Users/kenton/Downloads/集群重点研发/蝠鲼数据集/jpg/处理结果集合/VOCdevkit/VOC2007_COCO/annotations/test2017.json"</span></span><br><span class="line">img_path = <span class="string">"/Users/kenton/Downloads/集群重点研发/蝠鲼数据集/jpg/处理结果集合/VOCdevkit/VOC2007_COCO/images/"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load coco data</span></span><br><span class="line">coco = COCO(annotation_file=json_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get all image index info</span></span><br><span class="line">ids = <span class="built_in">list</span>(<span class="built_in">sorted</span>(coco.imgs.keys()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"number of images: {}"</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(ids)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># get all coco class labels</span></span><br><span class="line">coco_classes = <span class="built_in">dict</span>([(v[<span class="string">"id"</span>], v[<span class="string">"name"</span>]) <span class="keyword">for</span> k, v <span class="keyword">in</span> coco.cats.items()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历前三张图像</span></span><br><span class="line"><span class="keyword">for</span> img_id <span class="keyword">in</span> ids[:<span class="number">3</span>]:</span><br><span class="line">    <span class="comment"># 获取对应图像id的所有annotations idx信息</span></span><br><span class="line">    ann_ids = coco.getAnnIds(imgIds=img_id)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据annotations idx信息获取所有标注信息</span></span><br><span class="line">    targets = coco.loadAnns(ann_ids)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get image file name</span></span><br><span class="line">    path = coco.loadImgs(img_id)[<span class="number">0</span>][<span class="string">'file_name'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># read image</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(os.path.join(img_path, path)).convert(<span class="string">'RGB'</span>)</span><br><span class="line">    draw = ImageDraw.Draw(img)</span><br><span class="line">    <span class="comment"># draw box to image</span></span><br><span class="line">    <span class="keyword">for</span> target <span class="keyword">in</span> targets:</span><br><span class="line">        x, y, w, h = target[<span class="string">"bbox"</span>]</span><br><span class="line">        x1, y1, x2, y2 = x, y, <span class="built_in">int</span>(x + w), <span class="built_in">int</span>(y + h)</span><br><span class="line">        draw.rectangle((x1, y1, x2, y2))</span><br><span class="line">        draw.text((x1, y1), coco_classes[target[<span class="string">"category_id"</span>]])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># show image</span></span><br><span class="line">    plt.imshow(img)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -410,6 +494,91 @@ mjx-container[display="true"] + br {
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" class="post-title-link" itemprop="url">「深度学习基础」神经网络中的归一化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-28 16:35:15" itemprop="dateModified" datetime="2022-05-28T16:35:15+08:00">2022-05-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文将详细介绍神经网络中常见的五种归一化「包含Weight Norm」</p>
+<iframe src="//player.bilibili.com/player.html?aid=595391170&bvid=BV1Pq4y1a7pH&cid=569272749&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -471,91 +640,6 @@ mjx-container[display="true"] + br {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/" class="post-title-link" itemprop="url">「深度学习基础」神经网络中的归一化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-28 16:35:15" itemprop="dateModified" datetime="2022-05-28T16:35:15+08:00">2022-05-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将详细介绍神经网络中常见的五种归一化「包含Weight Norm」</p>
-<iframe src="//player.bilibili.com/player.html?aid=595391170&bvid=BV1Pq4y1a7pH&cid=569272749&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/23/%E3%80%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E3%80%8D%E5%BD%92%E4%B8%80%E5%8C%96%E5%B1%82/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1068,105 +1152,6 @@ mjx-container[display="true"] + br {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%E5%9F%BA%E4%BA%8E%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%9A%84%E4%BA%BA%E6%B5%81%E9%87%8F%E8%AE%A1%E6%95%B0%E4%B8%8E%E8%B6%B3%E8%BF%B9%E7%BB%98%E5%88%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">「目标追踪系列」（二）基于mmTracking的目标追踪实现</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-22 08:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T08:00:00+08:00">2022-05-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-24 15:19:18" itemprop="dateModified" datetime="2022-05-24T15:19:18+08:00">2022-05-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="mmTracking介绍"><a href="#mmTracking介绍" class="headerlink" title="mmTracking介绍"></a>mmTracking介绍</h2><p>MMTracking是一款基于PyTorch的视频目标感知开源工具箱，是<a target="_blank" rel="noopener" href="http://openmmlab.org/">OpenMMLab</a>项目的一部分。</p>
-<p>主分支代码目前支持<strong>PyTorch 1.5以上</strong>的版本。</p>
-<p><img src="https://user-images.githubusercontent.com/24663779/103343312-c724f480-4ac6-11eb-9c22-b56f1902584e.gif"></p>
-<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
-<li><p><strong>首个开源一体化视频目标感知平台</strong></p>
-<p>MMTracking 是首个开源一体化视频目标感知工具箱，同时支持视频目标检测，多目标跟踪，单目标跟踪和视频个例分割等多种任务和算法。</p>
-</li>
-<li><p><strong>模块化设计</strong></p>
-<p>MMTracking将统一的视频目标感知框架解耦成不同的模块组件，通过组合不同模块组件，用户可以便捷地构建自定义视频目标感知模型。</p>
-</li>
-<li><p><strong>简洁、高效、强大</strong></p>
-<p><strong>简洁</strong>：MMTracking与其他OpenMMLab平台充分交互。MMTracking充分复用<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection">MMDetection</a>中的已有模块，我们只需要修改配置文件就可以使用任何检测器。</p>
-<p><strong>高效</strong>：MMTracking所有操作都在GPU上运行。相比其他开源库的实现，MMTracking的训练和推理更加高效。</p>
-<p><strong>强大</strong>：MMTracking复现了SOTA性能的模型。受益于<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection">MMDetection</a>的持续推进，部分实现精度超出官方版本。</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

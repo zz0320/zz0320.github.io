@@ -274,13 +274,13 @@ mjx-container[display="true"] + br {
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -317,6 +317,105 @@ mjx-container[display="true"] + br {
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">「目标追踪系列」（二）基于mmTracking的目标追踪实现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-22 08:00:00" itemprop="dateCreated datePublished" datetime="2022-05-22T08:00:00+08:00">2022-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-24 15:19:18" itemprop="dateModified" datetime="2022-05-24T15:19:18+08:00">2022-05-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="mmTracking介绍"><a href="#mmTracking介绍" class="headerlink" title="mmTracking介绍"></a>mmTracking介绍</h2><p>MMTracking是一款基于PyTorch的视频目标感知开源工具箱，是<a target="_blank" rel="noopener" href="http://openmmlab.org/">OpenMMLab</a>项目的一部分。</p>
+<p>主分支代码目前支持<strong>PyTorch 1.5以上</strong>的版本。</p>
+<p><img src="https://user-images.githubusercontent.com/24663779/103343312-c724f480-4ac6-11eb-9c22-b56f1902584e.gif"></p>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li><p><strong>首个开源一体化视频目标感知平台</strong></p>
+<p>MMTracking 是首个开源一体化视频目标感知工具箱，同时支持视频目标检测，多目标跟踪，单目标跟踪和视频个例分割等多种任务和算法。</p>
+</li>
+<li><p><strong>模块化设计</strong></p>
+<p>MMTracking将统一的视频目标感知框架解耦成不同的模块组件，通过组合不同模块组件，用户可以便捷地构建自定义视频目标感知模型。</p>
+</li>
+<li><p><strong>简洁、高效、强大</strong></p>
+<p><strong>简洁</strong>：MMTracking与其他OpenMMLab平台充分交互。MMTracking充分复用<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection">MMDetection</a>中的已有模块，我们只需要修改配置文件就可以使用任何检测器。</p>
+<p><strong>高效</strong>：MMTracking所有操作都在GPU上运行。相比其他开源库的实现，MMTracking的训练和推理更加高效。</p>
+<p><strong>强大</strong>：MMTracking复现了SOTA性能的模型。受益于<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection">MMDetection</a>的持续推进，部分实现精度超出官方版本。</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/22/%E3%80%8C%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E4%BA%8EmmTracking%E7%9A%84%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1263,95 +1362,6 @@ mjx-container[display="true"] + br {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/18/%E3%80%8C%E7%9E%8E%E6%8A%98%E8%85%BE%E3%80%8D%E6%94%AF%E6%8C%81Apple%20Silion%E7%9A%84%E6%96%B0%E7%89%88%E6%9C%ACPytorch%E6%B5%8B%E8%AF%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/11/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%B7%E8%A7%86%E7%A7%91%E6%8A%80CVPR2022%E3%80%90CREStereo%E3%80%91%E5%AE%98%E6%96%B9GitHub%E4%BB%A3%E7%A0%81%E6%8E%A8%E7%90%86%E8%BF%90%E8%A1%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/11/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%B7%E8%A7%86%E7%A7%91%E6%8A%80CVPR2022%E3%80%90CREStereo%E3%80%91%E5%AE%98%E6%96%B9GitHub%E4%BB%A3%E7%A0%81%E6%8E%A8%E7%90%86%E8%BF%90%E8%A1%8C/" class="post-title-link" itemprop="url">「论文系列」（一）旷视科技CVPR2022【CREStereo】官方GitHub代码推理运行</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-11 23:07:00" itemprop="dateCreated datePublished" datetime="2022-05-11T23:07:00+08:00">2022-05-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-22 22:15:08" itemprop="dateModified" datetime="2022-05-22T22:15:08+08:00">2022-05-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p>CVPR2022论文     <strong>《基于自适应相关级联递归网络的实用双目匹配》</strong>ttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2203.11483</p>
-<p>原文链接：「<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.11483">Practical Stereo Matching via Cascaded Recurrent Network with Adaptive Correlation</a>」</p>
-<p>作者解读视频：</p>
-<iframe src="//player.bilibili.com/player.html?aid=383885340&bvid=BV1oZ4y1h7mL&cid=717464018&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<h2 id="运行准备"><a href="#运行准备" class="headerlink" title="运行准备"></a>运行准备</h2><p>在<strong>恒源云</strong>平台 配置一个<strong>CUDA10.1</strong>的环境 这里选择<strong>Tesla T4</strong> 「使用其他型号可能无法只能进行CUDA11及以上的配置」</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/11/%E3%80%8C%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%B7%E8%A7%86%E7%A7%91%E6%8A%80CVPR2022%E3%80%90CREStereo%E3%80%91%E5%AE%98%E6%96%B9GitHub%E4%BB%A3%E7%A0%81%E6%8E%A8%E7%90%86%E8%BF%90%E8%A1%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
