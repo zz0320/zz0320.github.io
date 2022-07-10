@@ -272,7 +272,7 @@ mjx-container[display="true"] + br {
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEYOLOX"><span class="nav-number">1.</span> <span class="nav-text">服务器配置YOLOX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">环境测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BAonnx"><span class="nav-number">1.3.</span> <span class="nav-text">导出onnx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jetson%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Jetson环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-number">2.1.</span> <span class="nav-text">烧录系统镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E6%B5%8B%E8%AF%95DeepStream"><span class="nav-number">2.2.</span> <span class="nav-text">安装和测试DeepStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Dependencies"><span class="nav-number">2.2.1.</span> <span class="nav-text">Install Dependencies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-DeepStream-SDK"><span class="nav-number">2.2.2.</span> <span class="nav-text">Install DeepStream SDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DeepStream-%E6%B5%8B%E8%AF%95"><span class="nav-number">2.2.3.</span> <span class="nav-text">DeepStream 测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85onnx2trt"><span class="nav-number">2.3.</span> <span class="nav-text">安装onnx2trt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cmake"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装cmake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85protobuf"><span class="nav-number">2.3.2.</span> <span class="nav-text">安装protobuf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85onnx-tensorrt"><span class="nav-number">2.3.3.</span> <span class="nav-text">安装onnx-tensorrt</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90TensorRT-engine%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">生成TensorRT engine文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8DeepStream%E9%83%A8%E7%BD%B2YOLOX"><span class="nav-number">3.2.</span> <span class="nav-text">使用DeepStream部署YOLOX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9Dyolox-deepstream%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">拷贝yolox deepstream文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9Dyolox%E7%9A%84engine%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.2.</span> <span class="nav-text">拷贝yolox的engine文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">3.2.3.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E8%87%AA%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">3.3.</span> <span class="nav-text">针对自训练数据集的修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9config-infer-primary-txt%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">3.3.1.</span> <span class="nav-text">修改config_infer_primary.txt中的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6nvdsinfer-custom-impl-yolo-nvdsparsebbox-yolox-cpp%E5%B9%B6%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91"><span class="nav-number">3.3.2.</span> <span class="nav-text">修改文件nvdsinfer_custom_impl_yolo&#x2F;nvdsparsebbox_yolox.cpp并重新编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="nav-number">3.3.3.</span> <span class="nav-text">其它参数修改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">4.</span> <span class="nav-text">结果展示</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEYOLOX"><span class="nav-number">1.</span> <span class="nav-text">服务器配置YOLOX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">环境测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BAonnx"><span class="nav-number">1.3.</span> <span class="nav-text">导出onnx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jetson%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Jetson环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-number">2.1.</span> <span class="nav-text">烧录系统镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E6%B5%8B%E8%AF%95DeepStream"><span class="nav-number">2.2.</span> <span class="nav-text">安装和测试DeepStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Dependencies"><span class="nav-number">2.2.1.</span> <span class="nav-text">Install Dependencies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-DeepStream-SDK"><span class="nav-number">2.2.2.</span> <span class="nav-text">Install DeepStream SDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DeepStream-%E6%B5%8B%E8%AF%95"><span class="nav-number">2.2.3.</span> <span class="nav-text">DeepStream 测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85onnx2trt"><span class="nav-number">2.3.</span> <span class="nav-text">安装onnx2trt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cmake"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装cmake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85protobuf"><span class="nav-number">2.3.2.</span> <span class="nav-text">安装protobuf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85onnx-tensorrt"><span class="nav-number">2.3.3.</span> <span class="nav-text">安装onnx-tensorrt</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90TensorRT-engine%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">生成TensorRT engine文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8DeepStream%E9%83%A8%E7%BD%B2YOLOX"><span class="nav-number">3.2.</span> <span class="nav-text">使用DeepStream部署YOLOX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9Dyolox-deepstream%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">拷贝yolox deepstream文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9Dyolox%E7%9A%84engine%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.2.</span> <span class="nav-text">拷贝yolox的engine文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">3.2.3.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E8%87%AA%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">3.3.</span> <span class="nav-text">针对自训练数据集的修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9config-infer-primary-txt%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">3.3.1.</span> <span class="nav-text">修改config_infer_primary.txt中的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6nvdsinfer-custom-impl-yolo-x2F-nvdsparsebbox-yolox-cpp%E5%B9%B6%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91"><span class="nav-number">3.3.2.</span> <span class="nav-text">修改文件nvdsinfer_custom_impl_yolo&#x2F;nvdsparsebbox_yolox.cpp并重新编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="nav-number">3.3.3.</span> <span class="nav-text">其它参数修改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">4.</span> <span class="nav-text">结果展示</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -287,7 +287,7 @@ mjx-container[display="true"] + br {
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -390,102 +390,140 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x3v0ozz0j210j0u0dhv.jpg" style="zoom: 50%;"></p>
+        <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x3v0ozz0j210j0u0dhv.jpg" style="zoom: 50%;">
+
 <h2 id="服务器配置YOLOX"><a href="#服务器配置YOLOX" class="headerlink" title="服务器配置YOLOX"></a>服务器配置YOLOX</h2><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p>首先配置一个torch190 cuda111 python3.8的环境</p>
 <p>之后安装YOLOX 使用如下命令</p>
 <span id="more"></span>
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:Megvii-BaseDetection/YOLOX.git</span><br></pre></td></tr></table></figure>
+
 <p>进入YOLOX的目录下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">python setup.py develop</span><br></pre></td></tr></table></figure>
+
 <p>回到根目录安装pycocotools</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install cython</span><br><span class="line">git clone https://github.com/cocodataset/cocoapi.git</span><br><span class="line">cd cocoapi/PythonAPI</span><br><span class="line">python setup.py install --user</span><br></pre></td></tr></table></figure>
+
 <p>下载yolox_s.pth，yolox_tiny.pth, yolox_nano.pth权重文件，并放置在YOLOX/weights文件夹下「<a target="_blank" rel="noopener" href="https://github.com/Megvii-BaseDetection/YOLOX">下载链接</a>」</p>
-<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2whnc2qc5j20l90gb0u8.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2whnc2qc5j20l90gb0u8.jpg"></p>
 <h3 id="环境测试"><a href="#环境测试" class="headerlink" title="环境测试"></a>环境测试</h3><p>测试图片</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools/demo.py image -n yolox-s -c weights/yolox_s.pth.tar --path assets/dog.jpg --conf 0.3 --nms 0.65 --tsize 640 --save_result</span><br></pre></td></tr></table></figure>
+
 <p>测试视频</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools/demo.py video -n yolox-s -c weights/yolox_s.pth.tar  --path driving.mp4 --conf 0.3 --nms 0.65 --tsize 640 --save_result --device gpu</span><br></pre></td></tr></table></figure>
+
 <h3 id="导出onnx"><a href="#导出onnx" class="headerlink" title="导出onnx"></a>导出onnx</h3><p>导出yolox_s.onnx文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools/export_onnx.py --output-name weights/yolox_s.onnx -n yolox-s -c weights/yolox_s.pth</span><br></pre></td></tr></table></figure>
+
 <p>导出yolox_nano.onnx文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools/export_onnx.py --output-name weights/yolox_nano.onnx -n yolox-nano -c weights/yolox_nano.pth</span><br></pre></td></tr></table></figure>
+
 <h2 id="Jetson环境配置"><a href="#Jetson环境配置" class="headerlink" title="Jetson环境配置"></a>Jetson环境配置</h2><h3 id="烧录系统镜像"><a href="#烧录系统镜像" class="headerlink" title="烧录系统镜像"></a>烧录系统镜像</h3><p>烧录JetPack4.5.1「<a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/downloads">英伟达官方地址</a>」</p>
 <h3 id="安装和测试DeepStream"><a href="#安装和测试DeepStream" class="headerlink" title="安装和测试DeepStream"></a>安装和测试DeepStream</h3><h4 id="Install-Dependencies"><a href="#Install-Dependencies" class="headerlink" title="Install Dependencies"></a>Install Dependencies</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libssl1.0.0 libgstreamer1.0-0 gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav libgstrtspserver-1.0-0 libjansson4=2.11-1</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>如出现错误信息</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E: Unable to locate package libgstrtspserver-1.0-0</span><br><span class="line">E: Couldn't find any package by glob 'libgstrtspserver-1.0-0'</span><br><span class="line">E: Couldn't find any package by regex 'libgstrtspserver-1.0-0'</span><br></pre></td></tr></table></figure>
+
 <p>先执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update -y</span><br></pre></td></tr></table></figure>
+
 <p>再执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y libgstrtspserver-1.0-0</span><br></pre></td></tr></table></figure>
 </blockquote>
 <h4 id="Install-DeepStream-SDK"><a href="#Install-DeepStream-SDK" class="headerlink" title="Install DeepStream SDK"></a>Install DeepStream SDK</h4><p>此链接，下载 DeepStream 5.1 Jetson tar package deepstream_sdk_v5.1.0_jetson.tbz2, 到 Jetson，</p>
 <p>输入以下命令以提取并安装DeepStream SDK：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo tar -xvf deepstream_sdk_v5.1.0_jetson.tbz2 - C /</span><br><span class="line">cd /opt/nvidia/deepstream/deepstream-5.1</span><br><span class="line">sudo ./install.sh</span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
 <h4 id="DeepStream-测试"><a href="#DeepStream-测试" class="headerlink" title="DeepStream 测试"></a>DeepStream 测试</h4><p>执行命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/nvidia/deepstream/deepstream-5.1/sources/objectDetector_Yolo</span><br></pre></td></tr></table></figure>
+
 <p>执行编译命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo CUDA_VER=10.2 make -C nvdsinfer_custom_impl_Yolo</span><br></pre></td></tr></table></figure>
+
 <p>编辑文件prebuild.sh，<strong>注释掉除yolov3-tiny的语句</strong></p>
 <p>执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./prebuild.sh</span><br></pre></td></tr></table></figure>
+
 <p>下载yolov3-tiny.cfg和yolov3-tiny.weights</p>
 <blockquote>
 <p>注：如果下载不下来，可以手动下载后传输到开发版上。</p>
 </blockquote>
 <p><strong>然后，执行命令：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deepstream-app -c deepstream_app_config_yoloV3_tiny.txt</span><br></pre></td></tr></table></figure>
+
 <h3 id="安装onnx2trt"><a href="#安装onnx2trt" class="headerlink" title="安装onnx2trt"></a>安装onnx2trt</h3><p>查看TensorRT版本</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l |grep TensorRT</span><br></pre></td></tr></table></figure>
+
 <h4 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h4><p>删除原先的cmake</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove cmake</span><br><span class="line">sudo apt purge --auto-remove cmake</span><br></pre></td></tr></table></figure>
+
 <p>下载所需要的版本，解压「<a target="_blank" rel="noopener" href="https://cmake.org/files/v3.12/">下载链接</a>」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.21.2.tar.gz</span><br><span class="line">cd ~/cmake-3.21.2</span><br></pre></td></tr></table></figure>
+
 <p>编译安装</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap</span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>如果编译安装cmake时如果出现错误：could not find OpenSSL，执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libssl-dev</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>移动路径</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp ./bin/cmake /usr/bin/</span><br></pre></td></tr></table></figure>
+
 <p>验证安装结果</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --version</span><br></pre></td></tr></table></figure>
+
 <h4 id="安装protobuf"><a href="#安装protobuf" class="headerlink" title="安装protobuf"></a>安装protobuf</h4><p>下载protobuf-3.17.3.zip并解压「下载链接」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip protobuf-3.17.3.zip</span><br></pre></td></tr></table></figure>
+
 <p>执行以下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd protobuf-3.17.3</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">protoc --version</span><br></pre></td></tr></table></figure>
+
 <p>其中make执行时间较长</p>
 <h4 id="安装onnx-tensorrt"><a href="#安装onnx-tensorrt" class="headerlink" title="安装onnx-tensorrt"></a>安装onnx-tensorrt</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b 7.1 https://github.com/onnx/onnx-tensorrt.git</span><br></pre></td></tr></table></figure>
+
 <p>克隆后onnx-tensorrt/third_party/onnx中内容是空的，需要下载与tensorrt7.1匹配的onnx1.6「<a target="_blank" rel="noopener" href="https://github.com/onnx/onnx/releases">下载地址</a>」</p>
 <p>将下载后的内容，解压放置到onnx-tensorrt/third_party/ 「覆盖之前的onnx」</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf onnx-1.6.0.tar.gz</span><br><span class="line">mv onnx-1.6.0 onnx</span><br></pre></td></tr></table></figure>
+
 <p>执行以下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd onnx-tensorrt</span><br><span class="line">mkdir build </span><br><span class="line">cd build</span><br><span class="line">cmake .. -DTENSORRT_ROOT=/usr/src/tensorrt  </span><br><span class="line">make -j4</span><br><span class="line">sudo make install</span><br><span class="line">onnx2trt -V</span><br></pre></td></tr></table></figure>
+
 <h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="生成TensorRT-engine文件"><a href="#生成TensorRT-engine文件" class="headerlink" title="生成TensorRT engine文件"></a>生成TensorRT engine文件</h3><p>拷贝前面步骤生成的.onnx文件到Jetson上</p>
 <p>之后执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">onnx2trt yolox_s.onnx -o yolox_s.engine</span><br><span class="line">onnx2trt yolox_tiny.onnx -o yolox_tiny.engine</span><br></pre></td></tr></table></figure>
+
 <h3 id="使用DeepStream部署YOLOX"><a href="#使用DeepStream部署YOLOX" class="headerlink" title="使用DeepStream部署YOLOX"></a>使用DeepStream部署YOLOX</h3><h4 id="拷贝yolox-deepstream文件"><a href="#拷贝yolox-deepstream文件" class="headerlink" title="拷贝yolox deepstream文件"></a>拷贝yolox deepstream文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod -R 777 /opt/nvidia/deepstream/deepstream-5.1/sources/</span><br></pre></td></tr></table></figure>
+
 <p>拷贝文件<strong>YOLOX-deepstream.zip</strong>到/opt/nvidia/deepstream/deepstream-5.1/sources/</p>
 <p>然后，解压文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/nvidia/deepstream/deepstream-5.1/sources/</span><br><span class="line">unzip YOLOX-deepstream.zip</span><br></pre></td></tr></table></figure>
+
 <h4 id="拷贝yolox的engine文件"><a href="#拷贝yolox的engine文件" class="headerlink" title="拷贝yolox的engine文件"></a>拷贝yolox的engine文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/xxx/yolox_s.engine /opt/nvidia/deepstream/deepstream-5.1/sources/YOLOX-deepstream</span><br></pre></td></tr></table></figure>
+
 <p>对于YOLOX-tiny和YOLOX-nano</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /home/nano/yolox_tiny.engine /opt/nvidia/deepstream/deepstream-5.1/sources/YOLOX-deepstream</span><br><span class="line">cp /home/nano/yolox_nano.engine /opt/nvidia/deepstream/deepstream-5.1/sources/YOLOX-deepstream</span><br></pre></td></tr></table></figure>
+
 <h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/nvidia/deepstream/deepstream-5.1/sources/YOLOX-deepstream</span><br><span class="line">CUDA_VER=10.2 make -C nvdsinfer_custom_impl_yolox</span><br></pre></td></tr></table></figure>
+
 <p>对于YOLOX-tiny和YOLOX-nano的部署，nvdsparsebbox_yolox.cpp中先修改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">static const int INPUT_W = 416; //640;</span><br><span class="line">static const int INPUT_H = 416; //640;</span><br></pre></td></tr></table></figure>
+
 <p>然后再编译</p>
 <h3 id="针对自训练数据集的修改"><a href="#针对自训练数据集的修改" class="headerlink" title="针对自训练数据集的修改"></a>针对自训练数据集的修改</h3><h4 id="修改config-infer-primary-txt中的参数"><a href="#修改config-infer-primary-txt中的参数" class="headerlink" title="修改config_infer_primary.txt中的参数"></a>修改config_infer_primary.txt中的参数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">num-detected-classes=80</span><br></pre></td></tr></table></figure>
+
 <p>以及类别名称文件labels.txt</p>
-<h4 id="修改文件nvdsinfer-custom-impl-yolo-nvdsparsebbox-yolox-cpp并重新编译"><a href="#修改文件nvdsinfer-custom-impl-yolo-nvdsparsebbox-yolox-cpp并重新编译" class="headerlink" title="修改文件nvdsinfer_custom_impl_yolo/nvdsparsebbox_yolox.cpp并重新编译"></a>修改文件nvdsinfer_custom_impl_yolo/nvdsparsebbox_yolox.cpp并重新编译</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static void generate_yolox_proposals(std::vector&lt;GridAndStride&gt; grid_strides, </span><br><span class="line">float* feat_blob, float prob_threshold, std::vector&lt;Object&gt;&amp; objects)</span><br><span class="line">{</span><br><span class="line">   const int num_class = 80;</span><br></pre></td></tr></table></figure>
+<h4 id="修改文件nvdsinfer-custom-impl-yolo-x2F-nvdsparsebbox-yolox-cpp并重新编译"><a href="#修改文件nvdsinfer-custom-impl-yolo-x2F-nvdsparsebbox-yolox-cpp并重新编译" class="headerlink" title="修改文件nvdsinfer_custom_impl_yolo/nvdsparsebbox_yolox.cpp并重新编译"></a>修改文件nvdsinfer_custom_impl_yolo/nvdsparsebbox_yolox.cpp并重新编译</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static void generate_yolox_proposals(std::vector&lt;GridAndStride&gt; grid_strides, </span><br><span class="line">float* feat_blob, float prob_threshold, std::vector&lt;Object&gt;&amp; objects)</span><br><span class="line">{</span><br><span class="line">   const int num_class = 80;</span><br></pre></td></tr></table></figure>
+
 <h4 id="其它参数修改"><a href="#其它参数修改" class="headerlink" title="其它参数修改"></a>其它参数修改</h4><p>如要改变NMS_THRESH和BBOX_CONF_THRESH</p>
 <p>编辑文件nvdsinfer_custom_impl_yolo/nvdsparsebbox_yolox.cpp并重新编译</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define NMS_THRESH 0.65</span><br><span class="line">#define BBOX_CONF_THRESH 0.3</span><br></pre></td></tr></table></figure>
+
 <p>如要改变CONG_THRESH，编辑辑文件config_infer_primary.txt</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[class-attrs-all]</span><br><span class="line">pre-cluster-threshold=0.25</span><br></pre></td></tr></table></figure>
-<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><div class="table-container">
-<table>
+
+<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><table>
 <thead>
 <tr>
 <th>YOLOX-s</th>
@@ -493,11 +531,10 @@ mjx-container[display="true"] + br {
 <th>YOLOX-l</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2wk7u10oij21400u0agw.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x4zyjrrcj21400u044z.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2wkt4wp8fj21400u00zq.jpg" alt=""></td>
+<tbody><tr>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2wk7u10oij21400u0agw.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x4zyjrrcj21400u044z.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2wkt4wp8fj21400u00zq.jpg"></td>
 </tr>
 <tr>
 <td>～20FPS</td>
@@ -510,18 +547,16 @@ mjx-container[display="true"] + br {
 <td><strong>YOLOX-tiny</strong></td>
 </tr>
 <tr>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x547iaecj21400u0tgc.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x5ismbm2j21400u0q9j.jpg" alt=""></td>
-<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x5j5feiyj21400u0q9j.jpg" alt=""></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x547iaecj21400u0tgc.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x5ismbm2j21400u0q9j.jpg"></td>
+<td><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h2x5j5feiyj21400u0q9j.jpg"></td>
 </tr>
 <tr>
 <td>~2.5FPS</td>
 <td>~60FPS</td>
 <td>~56PFS</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 
     </div>
 
