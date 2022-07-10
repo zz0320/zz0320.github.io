@@ -280,7 +280,7 @@ mjx-container[display="true"] + br {
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -590,90 +590,6 @@ mjx-container[display="true"] + br {
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="陨石kk">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陨石kk的博客">
-      <meta itemprop="description" content="无限进步">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 陨石kk的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/" class="post-title-link" itemprop="url">「小脚本」（二）目标检测标注文件格式转化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-31 19:36:28" itemprop="dateModified" datetime="2022-05-31T19:36:28+08:00">2022-05-31</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="三种数据集格式介绍"><a href="#三种数据集格式介绍" class="headerlink" title="三种数据集格式介绍"></a>三种数据集格式介绍</h2><h3 id="COCO"><a href="#COCO" class="headerlink" title="COCO"></a>COCO</h3><h4 id="文件存放格式"><a href="#文件存放格式" class="headerlink" title="文件存放格式"></a>文件存放格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├── coco2017: 数据集根目录</span><br><span class="line">     ├── train2017: 所有训练图像文件夹(118287张)</span><br><span class="line">     ├── val2017: 所有验证图像文件夹(5000张)</span><br><span class="line">     └── annotations: 对应标注文件夹</span><br><span class="line">     		  ├── instances_train2017.json: 对应目标检测、分割任务的训练集标注文件</span><br><span class="line">     		  ├── instances_val2017.json: 对应目标检测、分割任务的验证集标注文件</span><br><span class="line">     		  ├── captions_train2017.json: 对应图像描述的训练集标注文件</span><br><span class="line">     		  ├── captions_val2017.json: 对应图像描述的验证集标注文件</span><br><span class="line">     		  ├── person_keypoints_train2017.json: 对应人体关键点检测的训练集标注文件</span><br><span class="line">     		  └── person_keypoints_val2017.json: 对应人体关键点检测的验证集标注文件夹</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -728,6 +644,90 @@ mjx-container[display="true"] + br {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%B8%80%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E6%A0%87%E7%AD%BE%E5%8F%AF%E8%A7%86%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="陨石kk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陨石kk的博客">
+      <meta itemprop="description" content="无限进步">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 陨石kk的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/" class="post-title-link" itemprop="url">「小脚本」（二）目标检测标注文件格式转化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 15:25:27" itemprop="dateCreated datePublished" datetime="2022-05-23T15:25:27+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-31 19:36:28" itemprop="dateModified" datetime="2022-05-31T19:36:28+08:00">2022-05-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="三种数据集格式介绍"><a href="#三种数据集格式介绍" class="headerlink" title="三种数据集格式介绍"></a>三种数据集格式介绍</h2><h3 id="COCO"><a href="#COCO" class="headerlink" title="COCO"></a>COCO</h3><h4 id="文件存放格式"><a href="#文件存放格式" class="headerlink" title="文件存放格式"></a>文件存放格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├── coco2017: 数据集根目录</span><br><span class="line">     ├── train2017: 所有训练图像文件夹(118287张)</span><br><span class="line">     ├── val2017: 所有验证图像文件夹(5000张)</span><br><span class="line">     └── annotations: 对应标注文件夹</span><br><span class="line">     		  ├── instances_train2017.json: 对应目标检测、分割任务的训练集标注文件</span><br><span class="line">     		  ├── instances_val2017.json: 对应目标检测、分割任务的验证集标注文件</span><br><span class="line">     		  ├── captions_train2017.json: 对应图像描述的训练集标注文件</span><br><span class="line">     		  ├── captions_val2017.json: 对应图像描述的验证集标注文件</span><br><span class="line">     		  ├── person_keypoints_train2017.json: 对应人体关键点检测的训练集标注文件</span><br><span class="line">     		  └── person_keypoints_val2017.json: 对应人体关键点检测的验证集标注文件夹</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/23/%E3%80%8C%E5%B0%8F%E8%84%9A%E6%9C%AC%E3%80%8D%EF%BC%88%E4%BA%8C%EF%BC%89%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A0%87%E6%B3%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
